@@ -1,0 +1,10 @@
+---
+- field: Vers.
+  bits: 4
+- bit: REP
+- bit: ERR
+- reserved: 2
+- field: Protocol
+  bits: 8
+- field: Total Frame Length
+  bits: 16

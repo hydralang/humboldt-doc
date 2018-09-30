@@ -1,0 +1,19 @@
+---
+- bit: CLI
+- bit: ADM
+- bit: ENC
+- bit: MIC
+- reserved: 4
+- field: Strength
+  bits: 8
+- field: Low
+  bits: 8
+- field: High
+  bits: 8
+- field: Node ID
+  bits: 128
+- field: Generation
+  bits: 32
+- field: Client ID
+  bits: 32
+- payload: Implementation Tag
