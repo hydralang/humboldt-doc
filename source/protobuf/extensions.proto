@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package net.kevnet.humboldt;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MessageOptions {
+    optional uint32 protocol = 50000;
+    optional bool   reply    = 50001 [default=false];
+    optional bool   error    = 50002 [default=false];
+}

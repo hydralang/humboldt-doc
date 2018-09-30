@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "conduit.proto";
+
+message Neighbor {
+    bytes  id     = 1; // Neighbor ID
+    uint32 rtt    = 2; // Smoothed round-trip time to neighbor
+    string origin = 3; // Origin conduit URI (allows auditability)
+    string target = 4; // Target conduit URI (allows auditability)
+}
+
+message LinkState {
+    option (protocol) = 5;
+
+    uint32            max_hops       = 1; // Maximum number of hops
+    uint32            sequence       = 2; // Sequence number of update
+    bytes             id             = 3; // ID of the originating node
+    uint32            generation     = 4; // Generation of the node
+    repeated Neighbor neighbors      = 5; // List of neighbors
+    repeated Conduit  conduits       = 6; // List of conduits
+    string            implementation = 7; // Implementation tag
+}
+
+message LinkStateAck {
+    option (protocol) = 5;
+    option (reply)    = true;
+
+    uint32 sequence   = 1; // Sequence number being acknowledged
+    bytes  id         = 2; // ID of the originating node
+    uint32 generation = 3; // Generation of the node
+}

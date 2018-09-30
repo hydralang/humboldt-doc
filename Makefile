@@ -5,7 +5,8 @@ VENV_DIR = .venv
 PYTHON = $(VENV_DIR)/bin/python
 
 # The tools to use
-PROTO_BITS = $(PYTHON) tools/proto_bits.py
+PROTO_BITS   = $(PYTHON) tools/proto_bits.py
+PROTOBUF_FMT = $(PYTHON) tools/protobuf_fmt.py
 
 # Sphinx options
 SPHINXOPTS    =
@@ -18,6 +19,7 @@ SPHINXTARGETS = html dirhtml singlehtml json latex latexpdf latexpdfja text \
 # Additional directories of interest
 BITSSOURCEDIR = $(SOURCEDIR)/bits
 BITSBUILDDIR  = $(BUILDDIR)/bits
+PROTODIR      = $(SOURCEDIR)/protobuf
 
 # Files of interest
 BITSFILES = $(shell find $(BITSSOURCEDIR) -name '*.bits' -print | sed 's@.*/@@')
@@ -32,6 +34,10 @@ $(VENV_DIR):
 $(BITSBUILDDIR):
 	mkdir -p $(BITSBUILDDIR)
 
+# Format protobuf files for prettiness
+format: $(VENV_DIR)
+	$(PROTOBUF_FMT) $(PROTODIR)/*.proto
+
 bits: $(VENV_DIR) $(BITSBUILDDIR) $(BITSFILES:%.bits=$(BITSBUILDDIR)/%.txt)
 
 # Construct plain text files from YAML descriptions of the bit layouts
@@ -43,4 +49,4 @@ $(BITSBUILDDIR)/%.txt: $(BITSSOURCEDIR)/%.bits
 $(SPHINXTARGETS): bits $(VENV_DIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: all bits
+.PHONY: all format bits

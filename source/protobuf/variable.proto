@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+message Variable {
+    string variable = 1; // Variable name
+    oneof value {
+        string value_str  = 2; // Variable value (string)
+        uint32 value_int  = 3; // Variable value (integer)
+        bool   value_bool = 4; // Variable value (boolean)
+    }
+}
+
+message Variables {
+    option (protocol) = 2;
+
+    uint64            timestamp = 1; // Timestamp of last variable update
+    repeated Variable values    = 2; // The variables and their values
+}
+
+message VariablesAck {
+    option (protocol) = 2;
+    option (reply)    = true;
+
+    uint64 timestamp = 1; // Timestamp of variable update acknowledged
+}

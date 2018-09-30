@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "google/protobuf/any.proto";
+
+enum Command {
+    NOOP          = 0; // No operation
+    SHUTDOWN      = 1; // Shut the instance down
+    CONNECT       = 2; // Initiate connection to a specified URI
+    LS_SUBSCRIBE  = 3; // Subscribe to link state frames
+    GOS_SUBSCRIBE = 4; // Subscribe to the gossip protocol
+    LOG_SUBSCRIBE = 5; // Subscribe to log messages
+    LINKS         = 6; // Request the current local links
+    LS_TABLE      = 7; // Request the contents of the link state table
+    FWD_TABLE     = 8; // Request the contents of the forwarding table
+    GOS_TABLE     = 9; // Request the contents of the gossip cache
+}
+
+message CommandArgument {
+    oneof arg {
+        string              value_str   = 1; // String value
+        uint32              value_int   = 2; // Integer value
+        bool                value_bool  = 3; // Boolean value
+        bytes               value_bytes = 4; // Bytes value
+        google.protobuf.Any value_any   = 5; // Any other protobuf value
+    }
+}
+
+message CommandRequest {
+    option (protocol) = 10;
+
+    uint32                   id      = 1; // ID of the command
+    Command                  command = 2; // Command being requested
+    repeated CommandArgument args    = 3; // Arguments for the command
+}
+
+message CommandResponse {
+    option (protocol) = 10;
+    option (reply)    = true;
+
+    uint32                   id      = 1; // ID of the command being replied to
+    Command                  command = 2; // Command that was executed
+    repeated CommandArgument results = 3; // Responses from the command
+}
+
+message CommandError {
+    option (protocol) = 10;
+    option (error)    = true;
+
+    uint32  id      = 1; // ID of the command that caused the error
+    Command command = 2; // Command that caused the error
+    uint32  code    = 3; // An error code
+    string  message = 4; // A (human-readable) message describing the error
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+message ForwardTo {
+    bytes target     = 1; // The target for the forwarding
+    bytes best_hop   = 2; // The best next hop
+    bytes second_hop = 3; // The second-best next hop
+}

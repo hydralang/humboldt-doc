@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+message Conduit {
+    string conduit = 1; // The conduit URI
+    string network = 2; // The network name; empty indicates public network
+}

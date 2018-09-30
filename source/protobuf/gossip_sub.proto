@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "rumor.proto";
+
+message GossipMessage {
+    option (protocol) = 11;
+
+    uint32    id    = 1; // ID of the message
+    NodeRumor rumor = 2; // Rumor that was discovered
+}
+
+message GossipAck {
+    option (protocol) = 11;
+    option (reply)    = true;
+
+    uint32 id = 1; // ID of the message being acknowledged
+}

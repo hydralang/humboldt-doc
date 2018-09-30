@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+message LinkLost {
+    option (protocol) = 6;
+
+    uint32 max_hops   = 1; // Maximum number of hops
+    uint32 sequence   = 2; // Sequence number of last link state frame
+    bytes  id         = 3; // ID of the disconnected node
+    uint32 generation = 4; // Generation of the node
+}
+
+message LinkLostAck {
+    option (protocol) = 6;
+    option (reply)    = true;
+
+    uint32 sequence   = 1; // Sequence number being acknowledged
+    bytes  id         = 2; // ID of the disconnected node
+    uint32 generation = 3; // Generation of the node
+}

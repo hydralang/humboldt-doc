@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "conduit.proto";
+
+message NodeRumor {
+    bytes            id             = 1; // ID of the node being gossiped about
+    uint32           generation     = 2; // Generation value for node
+    repeated Conduit conduits       = 3; // Conduits for reaching the node
+    string           implementation = 4; // Implementation tag
+}

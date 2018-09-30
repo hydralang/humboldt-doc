@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+message LogMessage {
+    option (protocol) = 12;
+
+    uint32 id      = 1; // ID of the message
+    string message = 2; // Log message
+}
+
+message LogAck {
+    option (protocol) = 12;
+    option (reply)    = true;
+
+    uint32 id = 1; // ID of the message being acknowledged
+}

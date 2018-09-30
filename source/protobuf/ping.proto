@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "rumor.proto";
+
+message Ping {
+    option (protocol) = 1;
+
+    uint64    timestamp = 1; // Timestamp of the ping
+    NodeRumor rumor     = 2; // Optional rumor about other nodes
+}
+
+message Pong {
+    option (protocol) = 1;
+    option (reply)    = true;
+
+    uint64    timestamp = 1; // Timestamp of the ping
+    NodeRumor rumor     = 2; // Optional rumor about other nodes
+}
