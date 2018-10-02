@@ -169,3 +169,9 @@ the client has administrative privileges; and it must also indicate
 whether message integrity protections are provided by the security
 layer, as well as whether message confidentiality (encryption) is
 enabled and an estimate of the strength of the encryption.
+
+.. note::
+
+   It is possible to layer security layers on top of other security
+   layers.  However, not all combinations are guaranteed to function.
+   The use of multiple security layers is **NOT RECOMMENDED**.
