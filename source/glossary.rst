@@ -34,11 +34,30 @@ Glossary
        A process whereby information about a peer is obtained,
        enabling connection to that peer.
 
+   distributed hash tables
+   DHT
+       A method of splitting up data across nodes, based on a
+       *consistent hash* (a hash function which does not depend on the
+       number of buckets).  DHT systems often employ routing
+       strategies that send messages to the nodes with an address as
+       close as possible to the address implied by the data.
+
    extended conduit URI
        A conduit URI that may contain DNS names and an indication of a
        discovery mechanism.  These may be used by administrative
        clients to discover peers which a node will then be directed to
        connect to.
+
+   gossip protocols
+       Protocols based on frequent, pair-wise interaction between
+       nodes in order to disseminate information across the network.
+
+   link-state routing protocols
+       Routing protocols where the nodes periodically send out
+       messages to all nodes about their own state, including
+       currently active links.  They are opposed to distance-vector
+       routing protocols, where nodes advertise all other nodes they
+       can see, but only to their immediate neighbors.
 
    message confidentiality
    encryption

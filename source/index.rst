@@ -45,6 +45,7 @@ client.
    :caption: Contents:
 
    high-level
+   history
    glossary
 
 Indices and tables
