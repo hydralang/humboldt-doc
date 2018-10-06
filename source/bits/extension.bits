@@ -1,7 +1,8 @@
 ---
 - bit: IGN
 - bit: CLS
-- reserved: 6
+- bit: HOP
+- reserved: 5
 - field: Protocol
   bits: 8
 - field: Extension Length

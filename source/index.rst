@@ -45,8 +45,11 @@ client.
    :caption: Contents:
 
    high-level
+   basics
    history
+   configuration
    glossary
+   bibliography
 
 Indices and tables
 ==================
