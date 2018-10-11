@@ -25,6 +25,13 @@ Glossary
        A transport protocol characterized by messages traveling from
        one source to all nodes.
 
+   cache
+       A temporary container for data.  Caches always have some
+       criteria for the removal of data, and should never be the
+       primary store for a piece of data.  Caches are often used for
+       storage of expensive to obtain data, or for the storage of data
+       that only needs to be held for a short period of time.
+
    carrier protocol
        A protocol intended to carry another protocol.
 

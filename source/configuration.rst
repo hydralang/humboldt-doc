@@ -12,6 +12,25 @@ meaning of each variable.
 Variables
 =========
 
+.. _bcast-cache:
+
+``BCAST_CACHE``
+---------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 600000
+     - :abbr:`ms (milliseconds)`
+
+The ``BCAST_CACHE`` configuration variable gives the maximum amount of
+time to store a broadcast frame's ID.
+
 .. _ret-cnt:
 
 ``RET_CNT``

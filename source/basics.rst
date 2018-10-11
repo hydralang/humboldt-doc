@@ -198,3 +198,51 @@ hop-by-hop retransmissions.
    doubled in each round, not the randomized interval actually used.
    Finally, randomization **MUST NOT** be used for the first
    retransmission timer.
+
+.. index:: ! broadcast
+
+Broadcasts
+----------
+
+Some protocols engage in a :term:`broadcast` to accomplish their task.
+In its simplest form, a broadcast is simply retransmission of a frame
+via all links except the one the original arrived from.  However,
+without some additional logic, that simple algorithm would result in
+that frame continually being retransmitted over the entire network
+forever.  To prevent this, all encapsulated protocols that use
+broadcasting **MUST** include some form of ID into the broadcast
+frame, in order to uniquely identify it.  Upon receipt of a broadcast
+frame, a :term:`cache` **MUST** be checked for the ID, and if it is
+not present, the frame **MUST** be retransmitted as described before,
+and the ID **MUST** be placed into the cache.
+
+.. sidebar:: Time-To-Live Limits
+
+   Because broadcasts are expensive, there are several strategies to
+   mitigate the expense.  One that is used by :ref:`link-state` is to
+   modify the broadcast strategy by decrementing a :abbr:`TTL (Time To
+   Live)` field on the frame each time the frame is forwarded; when
+   the TTL field reaches 0, the frame is not forwarded.
+
+The broadcast cache is a general term, as the implementation may
+choose to use either one cache for all encapsulated protocols, or one
+per protocol, depending on the requirements of the implementation.  In
+either case, entries in the cache **MUST** time out and be removed
+from the cache after a period of time defined by the
+:ref:`bcast-cache` configuration value.
+
+Broadcast frames **MUST** also be retransmitted and acknowledged, as
+described under :ref:`retrans-ack`.  The acknowledgment **MUST** be
+sent even if the frame ID is in the broadcast cache.  This ensures
+that the broadcast is received by each :term:`node` in the network.
+
+.. note::
+
+   Broadcasts are expensive, because of how many frames are generated
+   during the processing of the broadcast.  As such, if there is a way
+   to avoid using a broadcast, encapsulated protocols **SHOULD** use
+   the alternative.  If the use of a broadcast is required to
+   implement the desired algorithm, the protocol **SHOULD** take steps
+   to limit the frequency of the broadcast, including batching
+   updates.  Protocols **MAY** also use other mitigation strategies,
+   such as TTL semantics.
