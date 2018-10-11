@@ -79,19 +79,13 @@ that adds a 64-bit timestamp to a frame, the extension length field
 would be set to 12: 4 bytes for the header and 8 bytes for the
 timestamp.
 
-Common Algorithms
-=================
+Building Blocks
+===============
 
-An encoding of the contents of a PDU is insufficient to describe a
-protocol; a protocol specification must also describe the behavior:
-cases when particular messages are sent, what to do when receiving
-particular messages, and algorithms to execute with the data collected
-by means of the protocol exchange.  With Humboldt, there are several
-distinct encapsulated protocols, but many of them exhibit common
-:term:`algorithms`.  Additionally, a given node must execute other
-algorithms that, while related to particular protocols, may be
-executed unrelated to the receipt of frames encapsulating that
-protocol.  This section describes some of these algorithms.
+In this section, we describe the building blocks of the encapsulated
+protocols.  This consists largely of common :term:`algorithms`,
+although other common building blocks, such as encodings, may also be
+described.
 
 .. index:: ! round trip time
 .. index:: ! RTT
