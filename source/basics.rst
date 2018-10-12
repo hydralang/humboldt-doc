@@ -240,3 +240,33 @@ that the broadcast is received by each :term:`node` in the network.
    to limit the frequency of the broadcast, including batching
    updates.  Protocols **MAY** also use other mitigation strategies,
    such as TTL semantics.
+
+.. index:: ! gossip
+.. index:: ! gossip protocols
+
+Gossip Protocols
+----------------
+
+Humboldt has a need to disseminate some information across the entire
+network in a timely fashion.  If broadcasts were the only way to
+accomplish this, Humboldt would not be scalable, due to the huge
+number of frames that would have to be broadcast.  Enter the
+:term:`gossip protocols`: protocols based on frequent, pair-wise
+interactions between nodes.  In these interactions, pieces of
+information are selected essentially at random from a larger
+collection and exchanged with other nodes.  In this way, this
+information can be disseminated across the entire network without the
+overhead of a broadcast protocol.
+
+Gossip protocols are based on frequent interactions between pairs of
+nodes, and there's a random element to the interaction to ensure that
+all nodes eventually learn all the information being disseminated.
+Additionally, to keep memory requirements in check, the information
+learned about through the gossip protocol must be aged out unless and
+until it is learned about again from another such interaction.
+Humboldt nodes do this through a cache where the total size of the
+cache is constrained: if a new item of information is added to the
+cache, causing the cache size constraint to be exceeded, the least
+recently updated item in the cache will be discarded.  This allows the
+memory footprint to be kept small, but still allows information to
+traverse throughout the entire network.
