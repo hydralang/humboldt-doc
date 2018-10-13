@@ -213,10 +213,11 @@ and the ID **MUST** be placed into the cache.
 .. sidebar:: Time-To-Live Limits
 
    Because broadcasts are expensive, there are several strategies to
-   mitigate the expense.  One that is used by :ref:`link-state` is to
-   modify the broadcast strategy by decrementing a :abbr:`TTL (Time To
-   Live)` field on the frame each time the frame is forwarded; when
-   the TTL field reaches 0, the frame is not forwarded.
+   mitigate the expense.  One that is used by :ref:`link-state-proto`
+   is to modify the broadcast strategy by decrementing a :abbr:`TTL
+   (Time To Live)` field on the frame each time the frame is
+   forwarded; when the TTL field reaches 0, the frame is not
+   forwarded.
 
 The broadcast cache is a general term, as the implementation may
 choose to use either one cache for all encapsulated protocols, or one
@@ -285,3 +286,74 @@ buffer compiler can emit code in a variety of different languages,
 which aids in interoperability between Humboldt implementations.  In
 the descriptions of protocols, protobuf *messages* will be shown to
 describe the encoding of particular encapsulated protocol frames.
+
+.. index:: ! ID; node
+.. index:: ! node ID
+
+Node ID
+-------
+
+Each node in a Humboldt network has a unique, 128-bit ID.  Note that
+these IDs **SHOULD** be distributed uniformly, so a UUID will not be
+acceptable.  This ID is important to the routing system, in that, if a
+frame is being sent to an unknown node, it will be sent to the node
+with the closest ID for forwarding or other disposition.  It is
+**RECOMMENDED** that the node ID be persisted in on-disk storage,
+although it is also **RECOMMENDED** that nodes generate a new node ID
+on startup if one is not configured.
+
+.. index:: ! ID; generation
+.. index:: ! generation ID
+
+Generation ID
+-------------
+
+Each node in a Humboldt network also has a 32-bit *generation* ID.
+This ID is paired with the node ID to uniquely identify a single
+invocation of a node; that is, every time a node is started, it
+generates a new generation ID that can be used to distinguish the
+newly started node from its :term:`ghost`.  The generation ID **MUST**
+be monotonically increasing; that is, the generation ID for a newly
+started node must be numerically larger than the generation ID for any
+prior instance of the node with the same node ID.  While the Humboldt
+protocol does not require this, a 32-bit timestamp is an acceptable
+implementation for the generation ID.
+
+.. index:: ! ID; client
+.. index:: ! client ID
+
+Client ID
+---------
+
+Each client that connects to a Humboldt node is assigned a unique,
+32-bit client ID by that node (within the scope of the single node).
+This ID is used by the :term:`unicast` transport to direct messages to
+a given client.
+
+.. note::
+
+   Some implementations may be tempted to use file descriptors or
+   process IDs to identify clients.  This is **NOT RECOMMENDED**, as
+   otherwise a newly started client may receive messages intended for
+   a recently disconnected client.  It is **RECOMMENDED** that
+   Humboldt node implementations select a random number at startup,
+   then assign client IDs sequentially, starting from that random
+   number.  It is also **NOT RECOMMENDED** that the initial client ID
+   be selected based on timestamp.  Implementations **MAY** choose to
+   store the next client ID in a persistent store, as for the node ID.
+
+.. index:: ! ID; application
+.. index:: ! application ID
+
+Application ID
+--------------
+
+The application ID serves the same purpose in :term:`anycast`,
+:term:`multicast`, and :term:`broadcast` transports that the client ID
+serves in the :term:`unicast` transport.  However, the application ID
+is intended to be a well-known number for the specific application(s)
+utilizing Humboldt.  This number **MAY** be disseminated through the
+:ref:`conf-proto`, or through an application-specific registry
+operating on a well-known application ID; applications **MAY** also
+choose to simply hard-code the application ID, depending on the needs
+of the application.

@@ -85,6 +85,11 @@ Glossary
    frame
        A discrete collection of bytes.
 
+   ghost
+       A node link that no longer exists due to a node shutdown, but
+       where the Humboldt network has not yet discovered that
+       condition.
+
    gossip protocols
        Protocols based on frequent, pair-wise interaction between
        nodes in order to disseminate information across the network.
