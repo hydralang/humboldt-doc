@@ -50,6 +50,7 @@ client.
    configuration
    glossary
    bibliography
+   tables
 
 Indices and tables
 ==================
