@@ -40,6 +40,10 @@ format: $(VENV_DIR)
 
 bits: $(VENV_DIR) $(BITSBUILDDIR) $(BITSFILES:%.bits=$(BITSBUILDDIR)/%.txt)
 
+clean:
+	rm -rf $(BUILDDIR)
+	rm -f $(SOURCEDIR)/protobuf/*~
+
 # Construct plain text files from YAML descriptions of the bit layouts
 # for some protocol elements
 $(BITSBUILDDIR)/%.txt: $(BITSSOURCEDIR)/%.bits
@@ -49,4 +53,4 @@ $(BITSBUILDDIR)/%.txt: $(BITSSOURCEDIR)/%.bits
 $(SPHINXTARGETS): bits $(VENV_DIR)
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: all format bits
+.PHONY: all format bits clean
