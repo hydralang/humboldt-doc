@@ -141,6 +141,13 @@ Glossary
    peer
        A node in the same network as the node being discussed.
 
+   protocol buffers
+   protobuf
+       A binary encoding specification that produces compact
+       encodings.  The encoding is specified by a text file, which can
+       be turned into source code for encoding and decoding messages
+       through the use of the protocol buffer compiler, ``protoc``.
+
    protocol data unit
    PDU
        The fundamental unit of data in a protocol.  See

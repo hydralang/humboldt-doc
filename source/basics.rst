@@ -262,11 +262,26 @@ Gossip protocols are based on frequent interactions between pairs of
 nodes, and there's a random element to the interaction to ensure that
 all nodes eventually learn all the information being disseminated.
 Additionally, to keep memory requirements in check, the information
-learned about through the gossip protocol must be aged out unless and
-until it is learned about again from another such interaction.
-Humboldt nodes do this through a cache where the total size of the
-cache is constrained: if a new item of information is added to the
-cache, causing the cache size constraint to be exceeded, the least
-recently updated item in the cache will be discarded.  This allows the
-memory footprint to be kept small, but still allows information to
-traverse throughout the entire network.
+learned through the gossip protocol must be aged out unless and until
+it is learned again from another such interaction.  Humboldt nodes do
+this through a cache where the total size of the cache is constrained:
+if a new item of information is added to the cache, causing the cache
+size constraint to be exceeded, the least recently updated item in the
+cache will be discarded.  This allows the memory footprint to be kept
+small, but still allows information to traverse throughout the entire
+network.
+
+.. index:: ! encoding
+
+Protocol Encodings
+------------------
+
+The carrier protocol and its extensions is intended to be minimal and
+consistent overhead, and so is laid out using explicit bit
+specifications.  All of the encapsulated protocols, however, utilize
+:term:`protocol buffers` [ProtoBuf]_ to specify their binary
+encoding.  Protocol buffers are efficient and fast, and the protocol
+buffer compiler can emit code in a variety of different languages,
+which aids in interoperability between Humboldt implementations.  In
+the descriptions of protocols, protobuf *messages* will be shown to
+describe the encoding of particular encapsulated protocol frames.
