@@ -30,18 +30,21 @@ is designed to use a simple 4-byte header, laid out like so:
 
 The field labeled "Vers." consists of a 4-bit protocol version.  This
 indicates the version of the entire Humboldt protocol; this
-documentation describes version 0.  The next two bits are flag bits,
+documentation describes version 0.  (See :ref:`proto-negot` for more
+on Humboldt protocol versioning.)  The next two bits are flag bits,
 used to modify the :term:`encapsulated protocol`; in general, the
-``REP`` flag indicates a reply, and ``ERR`` indicates an error
-report.  The two bits following the flag bits are reserved, and
-**MUST** be set to 0.
+``REP`` flag indicates a reply, and ``ERR`` indicates an error report.
+The two bits following the flag bits are reserved, and **MUST** be set
+to 0.
 
 The "Protocol" field contains an 8-bit protocol number.  The protocol
-number space is split into two parts: protocol numbers from 0 to 127
+number space is split into two parts: protocol numbers from 1 to 127
 are assigned to encapsulated protocols, while protocol numbers from
 128 through 255 are intended to identify *extensions* to the carrier
-protocol.  Finally, the "Total Frame Length" field is, as the name
-suggests, a 16-bit byte length which includes the frame header.
+protocol.  (Protocol number 0 is reserved for reporting link errors
+and for protocol version negotiation; see :ref:`proto-negot`.)
+Finally, the "Total Frame Length" field is, as the name suggests, a
+16-bit byte length which includes the frame header.
 
 .. index:: ! carrier protocol; extensions
 
@@ -78,6 +81,68 @@ header.  As an example, if we assume the existence of an extension
 that adds a 64-bit timestamp to a frame, the extension length field
 would be set to 12: 4 bytes for the header and 8 bytes for the
 timestamp.
+
+.. _proto-negot:
+
+Protocol Versioning and Negotiation
+-----------------------------------
+
+The protocol version field specifies the overall major version of the
+Humboldt protocol, labeling it "0".  This version designates all the
+basic functionality described herein.  However, it is possible that
+additional functionality will be required in the future, both
+incremental additions and breaking changes.  To facilitate this, the
+Humboldt protocol version consists of both a *major* and *minor*
+version number; changes that break compatibility will result in an
+increment of the major version number, while changes that introduce
+additional optional functionality will increment the minor version
+number.
+
+The meaning of the version numbers is only one piece of the puzzle;
+two Humboldt nodes must also agree on the protocol version to use
+between them.  The major version number is always included in the
+first 4 bits of the carrier protocol, but that doesn't constitute
+agreement.  To agree, the two Humboldt nodes must *negotiate* the
+major version that they will use, which requires them knowing what
+versions the other accepts.  This exchange is done using a simple
+rule: the first frame sent on a new conduit will always use the
+highest major protocol version number supported by that node.  If both
+nodes use the same major version, no additional protocol overhead is
+required, as agreement has been reached.
+
+Next, we must consider what happens if the two nodes do not use the
+same major version.  Here, we can assume that there is a minimum major
+version that is supported by the implementations.  If a node receives
+a frame that uses a major version within the range it understands, it
+simply retransmits its initial frame using that major version, and
+uses that for the remainder of the lifetime of the conduit; it can
+safely ignore the error message it will receive from the other node.
+If, however, the frame is outside the range of versions it
+understands, the node must return an error, using protocol number 0
+with the ``ERR`` bit set, and using either its maximum or minimum
+known protocol major version, depending on whether the received frame
+has a version higher or lower than its own range.
+
+Once the two nodes have exchanged error replies, it is now known, by
+both sides, which versions, if any, are mutually supported.  If there
+are no mutually supported versions, then the link must be terminated;
+otherwise, the nodes pick the highest mutually supported protocol
+version and retransmit their initial frames using that version.
+
+.. note::
+
+   The content of the protocol 0 ``ERR`` frame is always a UTF-8
+   encoded string suitable for inclusion in a log or, in the case of a
+   client conduit, suitable for display to a user.  It is **NOT
+   RECOMMENDED** that this message be localized; these errors should
+   be in English to facilitate web searches for the error message.
+
+The minor version numbers are exchanged with the initial frame, and
+serve to highlight optional features understood by the two nodes.  It
+is assumed that any Humboldt node understands minor versions from 0 to
+its advertised minimum version number.  In major version 0 of the
+Humboldt protocol, the initial frame is described by
+:ref:`node-id-proto`.
 
 Building Blocks
 ===============

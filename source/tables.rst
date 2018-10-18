@@ -27,3 +27,25 @@ Table of Configuration Values
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
+
+.. _protocols:
+
+Table of Protocols
+==================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Name
+     - Number
+     - Since Minor
+     - Uses ``REP``
+     - Uses ``ERR``
+     - Uses ``REP`` and ``ERR``
+   * - :ref:`proto-negot`
+     - 0
+     - 0
+     -
+     - Y
+     -
