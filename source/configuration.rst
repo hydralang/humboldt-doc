@@ -12,6 +12,89 @@ meaning of each variable.
 Variables
 =========
 
+.. _asm-freq:
+
+``ASM_FREQ``
+------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 600000
+     - :abbr:`ms (milliseconds)`
+
+The ``ASM_FREQ`` configuration variable gives the length of each round
+of the self-assembly algorithm.
+
+.. _asm-maxconn:
+
+``ASM_MAXCONN``
+---------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 50
+     -
+
+The ``ASM_MAXCONN`` configuration variable provides the "maximum"
+number of connections a Humboldt node will attempt to open.  The
+"maximum" is in quotes because this is a soft limit controlling
+probability only; a Humboldt node may make or attempt to make any
+number of connections, depending on the needs of the self-assembly
+algorithm.
+
+.. _asm-minconn:
+
+``ASM_MINCONN``
+---------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 3
+     -
+
+The ``ASM_MINCONN`` configuration variable governs the minimum number
+of connections a node is allowed to have.  If the total number of
+connections is less than this value, the node **MUST** attempt to
+initiate enough connections per round to bring the connection count up
+to this value.
+
+.. _asm-qlen:
+
+``ASM_QLEN``
+------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 5
+     -
+
+The ``ASM_QLEN`` configuration variable controls the maximum number of
+outgoing connections a node may seek at once.
+
 .. _bcast-cache:
 
 ``BCAST_CACHE``

@@ -15,6 +15,22 @@ Table of Configuration Values
      - Type
      - Default
      - Units
+   * - :ref:`asm-freq`
+     - ``uint32``
+     - 600000
+     - :abbr:`ms (milliseconds)`
+   * - :ref:`asm-maxconn`
+     - ``uint32``
+     - 50
+     -
+   * - :ref:`asm-minconn`
+     - ``uint32``
+     - 3
+     -
+   * - :ref:`asm-qlen`
+     - ``uint32``
+     - 5
+     -
    * - :ref:`bcast-cache`
      - ``uint32``
      - 600000

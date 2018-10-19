@@ -309,6 +309,7 @@ that the broadcast is received by each :term:`node` in the network.
 
 .. index:: ! gossip
 .. index:: ! gossip protocols
+.. _gossip-proto:
 
 Gossip Protocols
 ----------------
@@ -367,6 +368,12 @@ with the closest ID for forwarding or other disposition.  It is
 although it is also **RECOMMENDED** that nodes generate a new node ID
 on startup if one is not configured.
 
+Nodes often need to determine the distance in the ID space between two
+node IDs, or between a node ID and another 128-bit identifier.  In
+computing this distance, nodes **MUST** treat the ID space as
+circular; that is, the distance between the all-zeros ID and the
+all-ones ID is 1.
+
 .. index:: ! ID; generation
 .. index:: ! generation ID
 
@@ -422,3 +429,71 @@ utilizing Humboldt.  This number **MAY** be disseminated through the
 operating on a well-known application ID; applications **MAY** also
 choose to simply hard-code the application ID, depending on the needs
 of the application.
+
+Encapsulated Protocol Types
+---------------------------
+
+The encapsulated protocols are split into two different types: the
+*support* protocols (see :ref:`support-proto`) and the *transport*
+protocols (see :ref:`transport-proto`).  The support protocols provide
+support for the Humboldt network and, indirectly, for the transport
+protocols; that is, the support protocols are responsible for
+governing and maintaining the underlying network structure and
+building the routing tables that are then used by the transport
+protocols to actually transport data from one Humboldt client to one
+or more target clients.
+
+Additional Algorithms
+=====================
+
+In addition to the building blocks described above, and the support
+protocols described in :ref:`support-proto`, there are certain
+algorithms that operate mostly independently.  These are described
+below.
+
+Self-Assembly
+-------------
+
+A Humboldt network is self-assembling.  That is, a given Humboldt node
+is directed to connect to one other node, and from that it discovers
+additional nodes to connect to, including those nodes with IDs closest
+to its own.
+
+The first rule of self-assembly is simple: any time a node becomes
+aware of another node with an ID closer to its own than any of its
+current direct links, the node **MUST** immediately initiate a
+connection to that other node, regardless of any other rule described
+below.  The second rule is a corollary: if a node loses the conduit
+between itself and the node with the closest ID, it **MUST** initiate
+a reconnection to that other node, but at most once; if the
+reconnection attempt fails, a Humboldt node **MUST NOT** try again.
+
+The remaining self-assembly rules are organized around rounds of a
+fixed time duration given by :ref:`asm-freq`, with no more than one
+connection (other than as described above) initiated per round.  (This
+rule is relaxed if there are fewer than :ref:`asm-minconn`
+connections, in which case a node must attempt to initiate as many
+connections as would be required to bring the total connection count
+up to this value, subject to the :ref:`asm-qlen` restriction.)  Each
+initiated connection is added to a queue, from which it is only
+removed if the connection completes or is failed by the underlying
+network protocol.  Note that a Humboldt node **MUST NOT** allow this
+queue to grow larger than :ref:`asm-qlen`, except as provided for by
+the first and second self-assembly rules.
+
+In any given round, the Humboldt node **MUST** choose a node at
+random, with additional weight provided to nodes with greater hop
+distances, and the greatest weight provided to nodes that the Humboldt
+node as learned about only through a "gossip" interaction (see
+:ref:`gossip-proto`).  There is also a probability that the Humboldt
+node *won't* attempt to make any additional connection; this
+probability increases as the number of connections approaches
+:ref:`asm-maxconn`.
+
+.. note::
+
+   A given Humboldt node **MAY** have any number of connections, which
+   may have been initiated for any number of reasons.  The value given
+   by :ref:`asm-maxconn` is used solely to compute a probability of
+   not initiating a new connection, and that probability **MUST NOT**
+   reach 1 regardless of how many connections the node actually has.
