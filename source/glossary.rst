@@ -94,6 +94,10 @@ Glossary
        Protocols based on frequent, pair-wise interaction between
        nodes in order to disseminate information across the network.
 
+   horizon
+       A limit to the number of hops which a link state frame may
+       traverse away from its originating node.
+
    idempotency
        A property of a protocol where the consequences of receiving a
        given frame multiple times are identical to the case where the
@@ -168,6 +172,13 @@ Glossary
        security layer implemented on top of an underlying network
        protocol, that presents to the application the appearance of a
        never ending stream of data.
+
+   time to live
+   TTL
+       A limit to the number of hops a frame may traverse.  Typically,
+       this is a field in the protocol frame that is decremented prior
+       to forwarding the frame; if the field is decremented to 0, the
+       frame is not forwarded.
 
    unicast
        A transport protocol characterized by messages traveling from

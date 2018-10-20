@@ -510,3 +510,111 @@ probability increases as the number of connections approaches
    *not* initiating a new connection, and that probability **MUST
    NOT** reach 1 regardless of how many connections the node actually
    has.
+
+Message Routing
+---------------
+
+The Humboldt transport protocols need to be able to route messages to
+remote nodes, regardless of the transport system.  There are a number
+of ways this can be done, but Humboldt is designed to use a hybrid
+routing system: a combination of a *link state* routing strategy and a
+*closest to target* routing strategy.  The latter strategy, *closest
+to target*, is simple to explain: the message is routed to the node
+that has an ID closer to the target node's ID.  The *link state*
+routing strategy is based on link state routing protocols, such as
+OSPF (:rfc:`2328` and :rfc:`5340`); in these protocols, packets
+describing the state of each of a node's links are distributed to all
+routing nodes (see :ref:`link-state-proto` for more on Humboldt's link
+state protocol).
+
+In Humboldt's routing strategy, a node begins by searching the routing
+table (described in :ref:`link-state-algorithm`) for another node with
+an ID as close as possible to that which the frame is addressed.  The
+frame is then forwarded to the designated next hop.  To reduce the
+chance that frames traverse a cycle in the network due to routing
+table recomputation, the link state algorithm computes both a
+preferred primary next hop and a secondary, next-best hop; if a frame
+was received from the primary next hop, the node will instead forward
+it to the next-best hop instead.
+
+.. _link-state-algorithm:
+
+Link State Algorithm
+--------------------
+
+The main problem with a link state protocol is that each node needs to
+know about all other nodes, which can lead to a large memory footprint
+in the case of a large number of nodes.  This is the reason that
+Humboldt uses a hybrid routing strategy: by allowing node IDs to also
+designate locations, a frame can be forwarded closer to its intended
+recipient without the originating or intermediate nodes even being
+aware of the existence of that recipient.  With this rule, the link
+state routing packets (described in :ref:`link-state-proto`) can be
+restricted to a subset of the nodes, described in this document as the
+:term:`horizon` of the routing protocol.  This is accomplished by
+enforcing a :term:`time to live` on the link state frame.
+
+For more on the link state protocol, see :ref:`link-state-proto` and
+:ref:`link-lost-proto`.  The remainder of this section describes the
+algorithm used to construct the routing table from the link state
+table, composed of the known link state frames, which are cached by
+the node.
+
+.. sidebar:: The Link State Computation Timer
+
+   The timer controlled by :ref:`ls-compute` is intended to allow
+   updates to the routing table to be *batched* together.  Without
+   this feature, each link state update would immediately trigger
+   another routing table recomputation, which could result in a lot of
+   wasted computation.  By batching updates, the node is given time to
+   absorb related link state updates without a lot of wasted
+   recomputation.
+
+Every time the link state table is updated, the node begins a timer
+(controlled by the :ref:`ls-compute` configuration value).  After this
+timer expires, the link state algorithm is executed on the contents of
+the link state table, with additional updates not applied until the
+routing table has been recomputed.  The algorithm itself is based on
+the one described in the "Route Calculation" section of
+[Peterson2007]_, chapter 4.2, page 281, and it uses two temporary
+lists, one of which becomes the new routing table: these lists are
+designated the ``Tentative`` and ``Confirmed`` lists, and they contain
+entries of the form ``(Destination, Cost, NextHop)``.  In Humboldt's
+version of the algorithm, the lists are allowed to contain two entries
+for each ``Destination``.  The algorithm consists of 4 steps:
+
+1. Initialize the ``Confirmed`` list with an entry for the node
+   executing the algorithm; this entry has a cost of 0.
+
+2. For the node just added to the ``Confirmed`` list in the previous
+   step, call it node ``Next`` and select its link state frame.
+
+3. For each neighbor (``Neighbor``) of ``Next``, calculate the cost
+   (``Cost``) to reach this ``Neighbor`` as the sum of the cost from
+   the executing node to ``Next`` and from ``Next`` to ``Neighbor``.
+   Then:
+
+   * If ``Neighbor`` is currently not on either list, add ``(Neighbor,
+     Cost, NextHop)`` to ``Tentative``, with ``NextHop`` being the
+     locally connected node corresponding to ``Next``.
+
+   * If ``Neighbor`` has 1 entry on ``Confirmed`` via a different next
+     hop, but no entry on ``Tentative``, add it to ``Tentative``.
+
+   * If ``Neighbor`` has 2 entries on ``Confirmed``, skip it.
+
+   * if ``Neighbor`` has an entry on ``Tentative`` via a different
+     next hop, add it to ``Tentative``.
+
+   * If ``Neighbor`` has an entry on ``Tentative`` via the same next
+     hop, update the ``Cost`` of that entry if it is less than what we
+     previously computed.
+
+4. If ``Tentative`` is empty, stop.  Otherwise, pick the lowest cost
+   ``Tentative`` entry: if there are 2 entries on ``Confirmed`` (which
+   shouldn't happen), discard the entry and repeat Step 4; otherwise,
+   add it to ``Confirmed`` and go to Step 2.
+
+For Humboldt, the ``Cost`` in the link state frame is the smoothed
+:abbr:`RTT (Round Trip Time)`; see :ref:`rtt-calc` for details on how
+the round trip time is calculated.

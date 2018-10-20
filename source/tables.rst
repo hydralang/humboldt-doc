@@ -35,6 +35,10 @@ Table of Configuration Values
      - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
+   * - :ref:`ls-compute`
+     - ``uint32``
+     - 30000
+     - :abbr:`ms (milliseconds)`
    * - :ref:`ret-cnt`
      - ``uint32``
      - 5

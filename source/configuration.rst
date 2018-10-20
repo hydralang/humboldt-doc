@@ -114,6 +114,26 @@ outgoing connections a node may seek at once.
 The ``BCAST_CACHE`` configuration variable gives the maximum amount of
 time to store a broadcast frame's ID.
 
+.. _ls-compute:
+
+``LS_COMPUTE``
+--------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 30000
+     - :abbr:`ms (milliseconds)`
+
+The length of the timer for recomputing the link state table.  See
+:ref:`link-state-algorithm` for information on how this timer
+functions.
+
 .. _ret-cnt:
 
 ``RET_CNT``
