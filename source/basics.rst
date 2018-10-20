@@ -459,6 +459,18 @@ is directed to connect to one other node, and from that it discovers
 additional nodes to connect to, including those nodes with IDs closest
 to its own.
 
+.. sidebar:: Conduit Persistent Storage
+
+   The self-assembly discussion assumes that an administrative client
+   directs the Humboldt node to connect to another node.  This is
+   simple for new nodes, but having to do this in the case of a node
+   restart is obviously suboptimal.  Therefore, it is **RECOMMENDED**
+   that Humboldt nodes store at least the ID and exposed conduit(s) of
+   the node with the closest ID in persistent storage.  (It is also
+   **RECOMMENDED** that other discovered nodes also be stored in that
+   persistent storage.)  This will allow a restarting node to
+   reconnect to the Humboldt network quickly.
+
 The first rule of self-assembly is simple: any time a node becomes
 aware of another node with an ID closer to its own than any of its
 current direct links, the node **MUST** immediately initiate a
@@ -495,5 +507,6 @@ probability increases as the number of connections approaches
    A given Humboldt node **MAY** have any number of connections, which
    may have been initiated for any number of reasons.  The value given
    by :ref:`asm-maxconn` is used solely to compute a probability of
-   not initiating a new connection, and that probability **MUST NOT**
-   reach 1 regardless of how many connections the node actually has.
+   *not* initiating a new connection, and that probability **MUST
+   NOT** reach 1 regardless of how many connections the node actually
+   has.
