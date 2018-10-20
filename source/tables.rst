@@ -58,14 +58,12 @@ Table of Protocols
    :widths: auto
 
    * - Name
-     - Number
+     - Protocol Number
      - Since Minor
-     - Uses ``REP``
-     - Uses ``ERR``
-     - Uses ``REP`` and ``ERR``
+     - Sent From
+     - Sent To
    * - :ref:`proto-negot`
      - 0
      - 0
-     -
-     - Y
-     -
+     - Nodes; Clients
+     - Nodes; Clients

@@ -87,6 +87,19 @@ timestamp.
 Protocol Versioning and Negotiation
 -----------------------------------
 
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 0
+     - 0
+     - Nodes; Clients
+     - Nodes; Clients
+
 The protocol version field specifies the overall major version of the
 Humboldt protocol, labeling it "0".  This version designates all the
 basic functionality described herein.  However, it is possible that
