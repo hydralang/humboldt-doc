@@ -1,7 +1,0 @@
----
-- reserved: 16
-- field: Low
-  bits: 8
-- field: High
-  bits: 8
-- payload: Implementation Tag

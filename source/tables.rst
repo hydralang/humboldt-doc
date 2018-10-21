@@ -67,3 +67,8 @@ Table of Protocols
      - 0
      - Nodes; Clients
      - Nodes; Clients
+   * - :ref:`node-id-proto`
+     - 1
+     - 0
+     - Nodes; Clients
+     - Nodes; Clients

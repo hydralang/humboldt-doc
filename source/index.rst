@@ -46,6 +46,7 @@ client.
 
    high-level
    basics
+   support
    history
    configuration
    glossary

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+// The ConnType enumeration designates the type of the connection: a
+// peer node, a client, or an administrative client.
+enum ConnType {
+    UNKNOWN = 0; // Unknown connection type
+    PEER    = 1; // Peer is a peer Humboldt node
+    CLIENT  = 2; // Peer is a Humboldt client
+    ADMIN   = 3; // Peer is a Humboldt administrative client
+}
+
+// The NodeID message is exchanged once the conduit is established.
+// Exactly one of these messages is exchanged, so no frame ID is
+// needed to deal with retransmissions.
+message NodeID {
+    option (protocol) = 1;
+
+    ConnType peer           = 1; // The type of the connection
+    uint32   strength       = 2; // A measure of the strength of encryption
+    bool     integrity      = 3; // If true, message integrity is checked
+    uint32   minor          = 4; // The maximum supported minor version
+    bytes    node_id        = 5; // The 128-bit node ID
+    uint32   generation     = 6; // The 32-bit generation ID
+    uint32   client_id      = 7; // The 32-bit client ID
+    string   implementation = 8; // Optional implementation tag
+}
+
+// The NodeIDAck message acknowledges the receipt of the NodeID
+// message.
+message NodeIDAck {
+    option (protocol) = 1;
+    option (reply)    = true;
+
+    uint32 minor          = 1; // The maximum supported minor version
+    string implementation = 2; // Optional implementation tag
+}

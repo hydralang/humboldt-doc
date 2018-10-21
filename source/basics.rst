@@ -368,6 +368,7 @@ describe the encoding of particular encapsulated protocol frames.
 
 .. index:: ! ID; node
 .. index:: ! node ID
+.. _node-id:
 
 Node ID
 -------
@@ -389,6 +390,7 @@ all-ones ID is 1.
 
 .. index:: ! ID; generation
 .. index:: ! generation ID
+.. _generation-id:
 
 Generation ID
 -------------
@@ -406,6 +408,7 @@ implementation for the generation ID.
 
 .. index:: ! ID; client
 .. index:: ! client ID
+.. _client-id:
 
 Client ID
 ---------
@@ -442,6 +445,10 @@ utilizing Humboldt.  This number **MAY** be disseminated through the
 operating on a well-known application ID; applications **MAY** also
 choose to simply hard-code the application ID, depending on the needs
 of the application.
+
+.. index:: protocol; encapsulated
+.. index:: protocol; support
+.. index:: protocol; transport
 
 Encapsulated Protocol Types
 ---------------------------
