@@ -134,6 +134,45 @@ The length of the timer for recomputing the link state table.  See
 :ref:`link-state-algorithm` for information on how this timer
 functions.
 
+.. _ping-freq:
+
+``PING_FREQ``
+-------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 5000
+     - :abbr:`ms (milliseconds)`
+
+Frequency with which ping messages are sent; see :ref:`ping-proto`.
+Should be kept short to help ensure that node gossip spreads around
+the network in a timely manner.
+
+.. _ping-lost:
+
+``PING_LOST``
+-------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 5
+     -
+
+Maximum number of contiguous lost pings before a Humboldt node decides
+the connection has been lost and closes it.
+
 .. _ret-cnt:
 
 ``RET_CNT``

@@ -4,8 +4,10 @@ package net.kevnet.humboldt;
 
 import "google/protobuf/descriptor.proto";
 
+// Options indicating Humboldt protocol number, as well as the desired
+// setting of the REP and ERR flags.
 extend google.protobuf.MessageOptions {
-    optional uint32 protocol = 50000;
-    optional bool   reply    = 50001 [default=false];
-    optional bool   error    = 50002 [default=false];
+    optional uint32 protocol = 50000;                 // Protocol number
+    optional bool   reply    = 50001 [default=false]; // REP flag
+    optional bool   error    = 50002 [default=false]; // ERR flag
 }

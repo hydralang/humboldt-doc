@@ -90,6 +90,7 @@ Glossary
        where the Humboldt network has not yet discovered that
        condition.
 
+   gossip protocol
    gossip protocols
        Protocols based on frequent, pair-wise interaction between
        nodes in order to disseminate information across the network.
@@ -161,6 +162,10 @@ Glossary
    PDU
        The fundamental unit of data in a protocol.  See
        :term:`frame`.
+
+   rumor
+   rumors
+       A piece of data exchanged by a :term:`gossip protocol`.
 
    security layer
        An abstraction in Humboldt that allows security-related

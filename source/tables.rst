@@ -39,6 +39,14 @@ Table of Configuration Values
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
+   * - :ref:`ping-freq`
+     - ``uint32``
+     - 5000
+     - :abbr:`ms (milliseconds)`
+   * - :ref:`ping-lost`
+     - ``uint32``
+     - 5
+     -
    * - :ref:`ret-cnt`
      - ``uint32``
      - 5
@@ -69,6 +77,11 @@ Table of Protocols
      - Nodes; Clients
    * - :ref:`node-id-proto`
      - 1
+     - 0
+     - Nodes; Clients
+     - Nodes; Clients
+   * - :ref:`ping-proto`
+     - 2
      - 0
      - Nodes; Clients
      - Nodes; Clients

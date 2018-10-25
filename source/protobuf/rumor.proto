@@ -4,6 +4,10 @@ package net.kevnet.humboldt;
 
 import "conduit.proto";
 
+// A rumor about a remote node that wouldn't ordinarily be visible to
+// the receiving node.  This message contains enough information to
+// enable the receiving node to connect to the remote node, in order
+// to increase the density of network links.
 message NodeRumor {
     bytes            id             = 1; // ID of the node being gossiped about
     uint32           generation     = 2; // Generation value for node

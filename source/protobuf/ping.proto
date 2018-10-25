@@ -5,15 +5,23 @@ package net.kevnet.humboldt;
 import "extensions.proto";
 import "rumor.proto";
 
+// The Ping message is used to verify aliveness and measure RTT to a
+// direct link.  It also allows sending "rumors" about indirectly
+// linked nodes, as part of the gossip protocol.
 message Ping {
-    option (protocol) = 1;
+    option (protocol) = 2;
 
     uint64    timestamp = 1; // Timestamp of the ping
     NodeRumor rumor     = 2; // Optional rumor about other nodes
 }
 
+// The Pong message is the message sent in reply to a Ping.  It is
+// deliberately as identical as possible to the Ping message, to
+// facilitate quick turn-around for an accurate RTT measurement.  The
+// Pong can also include a node rumor, but implementations are advised
+// to pre-select this value, again to facilitate quick turn-around.
 message Pong {
-    option (protocol) = 1;
+    option (protocol) = 2;
     option (reply)    = true;
 
     uint64    timestamp = 1; // Timestamp of the ping

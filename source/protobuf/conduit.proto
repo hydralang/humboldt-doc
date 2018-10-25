@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package net.kevnet.humboldt;
 
+// A description of how to connect to a target node.
 message Conduit {
     string conduit = 1; // The conduit URI
     string network = 2; // The network name; empty indicates public network

@@ -228,7 +228,8 @@ Implementing this computation in C looks like this:
 (This code is taken from appendix A.2 of [Jacobson1988A2]_; variable
 names have been altered to improve clarity.)
 
-Humboldt measures round-trip times with millisecond resolution.
+Humboldt measures round-trip times with millisecond resolution.  For
+more information about the measurement, see :ref:`ping-proto`.
 
 .. index:: ! retransmission
 .. index:: ! acknowledgment
@@ -365,6 +366,18 @@ buffer compiler can emit code in a variety of different languages,
 which aids in interoperability between Humboldt implementations.  In
 the descriptions of protocols, protobuf *messages* will be shown to
 describe the encoding of particular encapsulated protocol frames.
+
+In the discussions of protocols in :ref:`support-proto` and
+:ref:`transport-proto`, the files describing the encodings make use of
+a set of extensions to identify the assigned protocol number and
+whether the ``REP`` and/or ``ERR`` flags should be set for that
+message type.  The relevant extensions are described as follows:
+
+.. literalinclude:: protobuf/extensions.proto
+   :language: proto
+   :lines: 7-13
+   :lineno-match:
+   :caption: :download:`extensions.proto <protobuf/extensions.proto>`
 
 .. index:: ! ID; node
 .. index:: ! node ID
