@@ -150,9 +150,3 @@ turn-around.  The ``Pong`` message looks like:
    same reason that nodes send them to clients: to verify aliveness of
    the connection.  The node **MUST** reply with ``Pong`` messages,
    but it **MAY** also apply rate-limiting controls.
-
-.. important::
-
-   To prevent reflection attacks utilizing Humboldt, nodes **MUST
-   NOT** reply to ``Ping`` messages unless those messages are
-   associated with a currently active conduit.

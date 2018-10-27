@@ -151,6 +151,13 @@ Glossary
    peer
        A node in the same network as the node being discussed.
 
+   principal
+       An identity established via cryptographic means.  For instance,
+       the principal of the server in a TLS connection would be the
+       distinguished name of the server's TLS certificate, while the
+       principal of a client connected via a local socket would be the
+       username the client is running as on the local system.
+
    protocol buffers
    protobuf
        A binary encoding specification that produces compact

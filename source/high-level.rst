@@ -161,17 +161,26 @@ some fashion, then presents an interface to the Humboldt protocol
 processor of the same form as would be presented by that underlying
 network transport.  That is, a security layer wrapping TCP would
 present a stream-oriented interface, while a security layer wrapping
-UDP would present a packet-oriented interface.  A security layer must
-also present certain information to the protocol processor: it must
-indicate whether the established conduit represents a client or a
-peer; if it's a client, the security layer must also indicate whether
-the client has administrative privileges; and it must also indicate
-whether message integrity protections are provided by the security
-layer, as well as whether message confidentiality (encryption) is
-enabled and an estimate of the strength of the encryption.
+UDP would present a packet-oriented interface.  A security layer
+**MUST** also present certain information to the protocol processor:
+it **MUST** indicate whether the established conduit represents a
+client or a peer; if it's a client, the security layer **MUST** also
+indicate whether the client has administrative privileges; and it
+**MUST** also indicate whether message integrity protections are
+provided by the security layer, as well as whether message
+confidentiality (encryption) is enabled and an estimate of the
+strength of the encryption.  Finally, the security layer **MUST**
+present, if known, the :term:`principal` that is connected via the
+conduit.
 
 .. note::
 
    It is possible to layer security layers on top of other security
    layers.  However, not all combinations are guaranteed to function.
    The use of multiple security layers is **NOT RECOMMENDED**.
+
+.. important::
+
+   To prevent reflection attacks utilizing Humboldt, nodes **MUST
+   NOT** accept any Humboldt protocol frames not associated with a
+   currently active and secured conduit.
