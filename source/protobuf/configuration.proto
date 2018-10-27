@@ -4,6 +4,9 @@ package net.kevnet.humboldt;
 
 import "extensions.proto";
 
+// The Variable message describes a single configuration variable: its
+// name and its value.  Values can be strings, integers, or booleans
+// (true/false).
 message Variable {
     string variable = 1; // Variable name
     oneof value {
@@ -13,15 +16,21 @@ message Variable {
     }
 }
 
+// The Variables message contains a list of all the configuration
+// variables and their values, along with the millisecond-resolution
+// time of the last update.  The "values" list can be empty if all
+// variables are set to their default.
 message Variables {
-    option (protocol) = 2;
+    option (protocol) = 3;
 
     uint64            timestamp = 1; // Timestamp of last variable update
     repeated Variable values    = 2; // The variables and their values
 }
 
+// The VariablesAck message acknowledges receipt of a Variables
+// message.
 message VariablesAck {
-    option (protocol) = 2;
+    option (protocol) = 3;
     option (reply)    = true;
 
     uint64 timestamp = 1; // Timestamp of variable update acknowledged

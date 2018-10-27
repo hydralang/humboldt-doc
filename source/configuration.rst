@@ -9,6 +9,8 @@ of each, the default if not present, and the units for interpreting
 that value (if applicable), as well as a brief description of the
 meaning of each variable.
 
+.. _conf-vars-list:
+
 Variables
 =========
 

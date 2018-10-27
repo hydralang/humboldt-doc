@@ -273,6 +273,7 @@ hop-by-hop retransmissions.
    retransmission timer.
 
 .. index:: ! broadcast
+.. _broadcast:
 
 Broadcasts
 ----------

@@ -150,3 +150,84 @@ turn-around.  The ``Pong`` message looks like:
    same reason that nodes send them to clients: to verify aliveness of
    the connection.  The node **MUST** reply with ``Pong`` messages,
    but it **MAY** also apply rate-limiting controls.
+
+.. important::
+
+   Peer nodes exchange ``Ping`` messages immediately after exchanging
+   node ID information (see :ref:`node-id-proto`) in order to create
+   an initial :abbr:`RTT (Round-Trip Time)` measurement for the link
+   state protocol.  The conduit is not considered active until at
+   least one ``Pong`` message has been received by the node.
+
+.. _conf-proto:
+
+Configuration Protocol
+======================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 3
+     - 0
+     - Nodes; Admin Clients
+     - Nodes; Clients
+
+The configuration protocol frames are exchanged immediately after
+exchanging node ID information.  They are also exchanged, in a
+broadcast, whenever an administrative client updates the
+configuration.
+
+Configuration variable names consist of a dotted sequence of
+identifiers (which **SHOULD** match the regular expression
+``/^[a-zA-Z_][a-zA-Z0-9_]*$/``).  All configuration variables consumed
+by the Humboldt network itself contain no dots, e.g.,
+:ref:`ping-freq`.  If applications utilizing Humboldt choose to
+utilize the configuration protocol, it is **RECOMMENDED** that they
+choose a unique dotted prefix to use for their variables, e.g.,
+"com.example.var1", "com.example.var2", etc.  Configuration variable
+values may be strings, integers (of at most 32 bits), or booleans; all
+configuration variables **MUST** have a reasonable default that will
+be used if the variable does not appear in the ``Variables`` message.
+For more on the Humboldt-specific configuration variables, see
+:ref:`conf-vars-list`.
+
+The ``Variables`` message contains the set of non-default variables
+and their values, as well as a millisecond-resolution timestamp that
+serves to identify the variable version.  The :term:`protobuf`
+definition is as follows:
+
+.. literalinclude:: protobuf/configuration.proto
+   :language: proto
+   :lines: 7-28
+   :lineno-match:
+   :caption: :download:`configuration.proto <protobuf/configuration.proto>`
+
+A node receiving a ``Variables`` message **MUST** respond with a
+``VariablesAck`` message with the same timestamp.  If the received
+timestamp is less than or equal to that of the current configuration
+known by the node, no other action is taken; otherwise, the node
+updates its current configuration and forwards the ``Variables`` frame
+as a broadcast (see :ref:`broadcast`).  The ``VariablesAck`` message
+is defined as follows:
+
+.. literalinclude:: protobuf/configuration.proto
+   :language: proto
+   :lines: 30-37
+   :lineno-match:
+   :caption: :download:`configuration.proto <protobuf/configuration.proto>`
+
+.. important::
+
+   Peer nodes exchange ``Variables`` messages immediately after
+   exchanging node ID information (see :ref:`node-id-proto`); nodes
+   also send a ``Variables`` message to clients when those clients
+   connect.  The conduit is not considered active until the
+   ``VariablesAck`` message has been received by the node.  However,
+   nodes **MUST** ignore ``Variables`` messages sent by clients,
+   unless the client is an administrative client and the conduit is
+   already considered active.

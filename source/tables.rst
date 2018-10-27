@@ -85,3 +85,8 @@ Table of Protocols
      - 0
      - Nodes; Clients
      - Nodes; Clients
+   * - :ref:`conf-proto`
+     - 3
+     - 0
+     - Nodes; Admin Clients
+     - Nodes; Clients
