@@ -136,6 +136,45 @@ The length of the timer for recomputing the link state table.  See
 :ref:`link-state-algorithm` for information on how this timer
 functions.
 
+.. _ls-horizon:
+
+``LS_HORIZON``
+--------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 5
+     -
+
+The horizon for the link state routing algorithm.  A given link state
+protocol frame may transit at most this many hops, in order to limit
+the memory footprint of Humboldt nodes.
+
+.. _ls-regen:
+
+``LS_REGEN``
+------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 600000
+     - :abbr:`ms (milliseconds)`
+
+The frequency with which link state protocol frames are regenerated,
+regardless of changes to the link state.
+
 .. _ping-freq:
 
 ``PING_FREQ``

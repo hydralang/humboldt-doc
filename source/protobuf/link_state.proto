@@ -5,15 +5,26 @@ package net.kevnet.humboldt;
 import "extensions.proto";
 import "conduit.proto";
 
+// The Neighbor message describes an immediate neighbor of a node,
+// including the ID of the neighbor and the RTT.  Additional data is
+// present for audit purposes, so administrators can detect suspicious
+// links.
 message Neighbor {
-    bytes  id     = 1; // Neighbor ID
-    uint32 rtt    = 2; // Smoothed round-trip time to neighbor
-    string origin = 3; // Origin conduit URI (allows auditability)
-    string target = 4; // Target conduit URI (allows auditability)
+    bytes  id        = 1; // Neighbor ID
+    uint32 rtt       = 2; // Smoothed round-trip time to neighbor
+    string principal = 3; // Principal for the link, if any (for auditability)
+    string origin    = 4; // Origin conduit URI (for auditability)
+    string target    = 5; // Target conduit URI (for auditability)
 }
 
+// The LinkState message describes a single node in the network, for
+// the purposes of routing.  These messages are distributed via
+// limited broadcast, under the control of the "max_hops" field, which
+// is decremented before the frame is forwarded; if decremented to 0,
+// the frame will not be forwarded.  The frame ID is composed of the
+// sequence number, the node ID, and the node generation value.
 message LinkState {
-    option (protocol) = 5;
+    option (protocol) = 10;
 
     uint32            max_hops       = 1; // Maximum number of hops
     uint32            sequence       = 2; // Sequence number of update
@@ -24,8 +35,10 @@ message LinkState {
     string            implementation = 7; // Implementation tag
 }
 
+// The LinkStateAck message is an acknowledgment of the receipt of a
+// LinkState message.
 message LinkStateAck {
-    option (protocol) = 5;
+    option (protocol) = 10;
     option (reply)    = true;
 
     uint32 sequence   = 1; // Sequence number being acknowledged

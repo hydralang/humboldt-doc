@@ -45,6 +45,14 @@ Glossary
    conduit URI
        A URI identifying one end of a conduit.
 
+   debouncing
+       A technique of delaying the processing of an event in order to
+       batch multiple of those events together.  The name originally
+       comes from electronic hardware, where a single push of a button
+       could result in several electronic signals due to physical
+       "bouncing" of the switch during activation; debouncing
+       eliminates the duplicate signals.
+
    discovery
        A process whereby information about a peer is obtained,
        enabling connection to that peer.

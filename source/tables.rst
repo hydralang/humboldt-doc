@@ -39,6 +39,14 @@ Table of Configuration Values
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
+   * - :ref:`ls-horizon`
+     - - ``uint32``
+     - 5
+     -
+   * - :ref:`ls-regen`
+     - ``uint32``
+     - 600000
+     - :abbr:`ms (milliseconds)`
    * - :ref:`ping-freq`
      - ``uint32``
      - 5000
@@ -90,3 +98,8 @@ Table of Protocols
      - 0
      - Nodes; Admin Clients
      - Nodes; Clients
+   * - :ref:`link-state-proto`
+     - 10
+     - 0
+     - Nodes
+     - Nodes; Admin Clients

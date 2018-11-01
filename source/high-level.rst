@@ -125,6 +125,7 @@ network name (which are interpreted to be public addresses) if there
 are no common networks or if connections via the other URIs failed.
 
 .. index:: ! security layer
+.. _security-layer:
 
 Security Layer
 ==============
