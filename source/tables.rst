@@ -35,14 +35,18 @@ Table of Configuration Values
      - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
-   * - :ref:`ls-compute`
+   * - :ref:`ls-batch`
+     - ``uint32``
+     - 5000
+     - :abbr:`ms (milliseconds)`
+   * - :ref:`ls-horizon`
+     - ``uint32``
+     - 5
+     -
+   * - :ref:`ls-max`
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
-   * - :ref:`ls-horizon`
-     - - ``uint32``
-     - 5
-     -
    * - :ref:`ls-regen`
      - ``uint32``
      - 600000

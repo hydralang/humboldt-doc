@@ -116,10 +116,10 @@ outgoing connections a node may seek at once.
 The ``BCAST_CACHE`` configuration variable gives the maximum amount of
 time to store a broadcast frame's ID.
 
-.. _ls-compute:
+.. _ls-batch:
 
-``LS_COMPUTE``
---------------
+``LS_BATCH``
+------------
 
 .. list-table::
    :header-rows: 1
@@ -129,12 +129,13 @@ time to store a broadcast frame's ID.
      - Default
      - Units
    * - ``uint32``
-     - 30000
+     - 5000
      - :abbr:`ms (milliseconds)`
 
-The length of the timer for recomputing the link state table.  See
-:ref:`link-state-algorithm` for information on how this timer
-functions.
+The length of the shorter duration timer used for :term:`debouncing`
+in the link state protocol and algorithm (see
+:ref:`link-state-algorithm` and :ref:`link-state-proto`).  For more on
+debouncing, see :ref:`debouncing-algorithm`.
 
 .. _ls-horizon:
 
@@ -155,6 +156,27 @@ functions.
 The horizon for the link state routing algorithm.  A given link state
 protocol frame may transit at most this many hops, in order to limit
 the memory footprint of Humboldt nodes.
+
+.. _ls-max:
+
+``LS_MAX``
+----------
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Type
+     - Default
+     - Units
+   * - ``uint32``
+     - 30000
+     - :abbr:`ms (milliseconds)`
+
+The length of the longer duration timer used for :term:`debouncing` in
+the link state protocol and algorithm (see :ref:`link-state-algorithm`
+and :ref:`link-state-proto`).  For more on debouncing, see
+:ref:`debouncing-algorithm`.
 
 .. _ls-regen:
 

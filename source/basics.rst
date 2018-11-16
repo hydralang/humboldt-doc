@@ -571,6 +571,32 @@ preferred primary next hop and a secondary, next-best hop; if a frame
 was received from the primary next hop, the node will instead forward
 it to the next-best hop instead.
 
+.. _debouncing-algorithm:
+
+Debouncing Algorithm
+--------------------
+
+There are a couple of algorithms in the Humboldt protocol that are
+driven by events.  In many cases, these events may occur multiple
+times in succession, and the action to be taken may be expensive to
+perform.  In these cases, Humboldt nodes **MUST** make use of a
+:term:`debouncing` algorithm.
+
+The **RECOMMENDED** debouncing algorithm used by Humboldt consists of
+two timers, one with a shorter duration than the other, that are both
+started when the first triggering event is received, where the shorter
+duration timer (and *only* that timer) is reset for each subsequent
+triggering event.  The action is triggered (and the other timer
+stopped) when either of the timers expires.
+
+The purpose of the shorter duration timer is to batch together several
+triggering events into a single trigger; this is the primary
+debouncing algorithm.  However, having the action occur in a timely
+manner is also important, and that is the purpose of the longer
+duration timer: it ensures that the action is not prevented by a long,
+spaced-out sequence of triggering events, thus preventing a denial of
+service situation.
+
 .. _link-state-algorithm:
 
 Link State Algorithm
@@ -594,22 +620,15 @@ algorithm used to construct the routing table from the link state
 table, composed of the known link state frames, which are cached by
 the node.
 
-.. sidebar:: The Link State Computation Timer
-
-   The timer controlled by :ref:`ls-compute` is intended to allow
-   updates to the routing table to be *batched* together.  Without
-   this feature, each link state update would immediately trigger
-   another routing table recomputation, which could result in a lot of
-   wasted computation.  By batching updates, the node is given time to
-   absorb related link state updates without a lot of wasted
-   recomputation.
-
-Every time the link state table is updated, the node begins a timer
-(controlled by the :ref:`ls-compute` configuration value).  After this
-timer expires, the link state algorithm is executed on the contents of
-the link state table, with additional updates not applied until the
-routing table has been recomputed.  The algorithm itself is based on
-the one described in the "Route Calculation" section of
+Every time the link state table is updated, the node utilizes the
+:ref:`debouncing-algorithm` (controlled by the :ref:`ls-batch` and
+:ref:`ls-max` configuration values; the former gives the shorter
+duration, while the latter specifies the longer duration for the
+debouncing timers).  When the debouncing algorithm finally allows the
+action to be triggered, the link state algorithm is executed on the
+contents of the link state table, with additional updates not applied
+until the routing table has been recomputed.  The algorithm itself is
+based on the one described in the "Route Calculation" section of
 [Peterson2007]_, chapter 4.2, page 281, and it uses two temporary
 lists, one of which becomes the new routing table: these lists are
 designated the ``Tentative`` and ``Confirmed`` lists, and they contain
