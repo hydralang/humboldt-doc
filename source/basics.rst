@@ -485,6 +485,8 @@ protocols described in :ref:`support-proto`, there are certain
 algorithms that operate mostly independently.  These are described
 below.
 
+.. _self-assembly:
+
 Self-Assembly
 -------------
 

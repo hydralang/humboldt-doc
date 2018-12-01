@@ -107,3 +107,8 @@ Table of Protocols
      - 0
      - Nodes
      - Nodes; Admin Clients
+   * - :ref:`admin-cmd-proto`
+     - 20
+     - 0
+     - Admin Clients
+     - Nodes

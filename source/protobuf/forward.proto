@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package net.kevnet.humboldt;
 
+// The ForwardTo message represents a single entry in the forwarding
+// table.
 message ForwardTo {
     bytes target     = 1; // The target for the forwarding
     bytes best_hop   = 2; // The best next hop

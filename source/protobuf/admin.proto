@@ -5,19 +5,26 @@ package net.kevnet.humboldt;
 import "extensions.proto";
 import "google/protobuf/any.proto";
 
+// The Command enumeration lists the administrative commands accepted
+// by the CommandRequest message.
 enum Command {
-    NOOP          = 0; // No operation
-    SHUTDOWN      = 1; // Shut the instance down
-    CONNECT       = 2; // Initiate connection to a specified URI
-    LS_SUBSCRIBE  = 3; // Subscribe to link state frames
-    GOS_SUBSCRIBE = 4; // Subscribe to the gossip protocol
-    LOG_SUBSCRIBE = 5; // Subscribe to log messages
-    LINKS         = 6; // Request the current local links
-    LS_TABLE      = 7; // Request the contents of the link state table
-    FWD_TABLE     = 8; // Request the contents of the forwarding table
-    GOS_TABLE     = 9; // Request the contents of the gossip cache
+    NOOP           =  0; // No operation
+    SHUTDOWN       =  1; // Shut the instance down
+    CONNECT        =  2; // Initiate connection to a specified URI
+    LINK_SUBSCRIBE =  3; // Subscribe to links
+    LS_SUBSCRIBE   =  4; // Subscribe to link state frames
+    FWD_SUBSCRIBE  =  5; // Subscribe to forwarding table updates
+    GOS_SUBSCRIBE  =  6; // Subscribe to the gossip protocol
+    LOG_SUBSCRIBE  =  7; // Subscribe to log messages
+    LINKS          =  8; // Request the current local links
+    LS_TABLE       =  9; // Request the contents of the link state table
+    FWD_TABLE      = 10; // Request the contents of the forwarding table
+    GOS_TABLE      = 11; // Request the contents of the gossip cache
 }
 
+// The CommandArgument message represents any possible argument for an
+// administrative command, or a command response.  Arguments may be of
+// any type serializable through protobuf.
 message CommandArgument {
     oneof arg {
         string              value_str   = 1; // String value
@@ -28,16 +35,25 @@ message CommandArgument {
     }
 }
 
+// The CommandRequest message describes a single administrative
+// command sent to a node by an administrative client.  The client
+// specifies an ID to help it match responses to the original command;
+// nodes treat the ID as opaque data.  Commands must be idempotent,
+// since the only acknowledgment is a CommandResponse or CommandError
+// message.
 message CommandRequest {
-    option (protocol) = 10;
+    option (protocol) = 20;
 
     uint32                   id      = 1; // ID of the command
     Command                  command = 2; // Command being requested
     repeated CommandArgument args    = 3; // Arguments for the command
 }
 
+// The CommandResponse message describes a non-error response to an
+// administrative command.  The ID field is the same as that sent by
+// the client.
 message CommandResponse {
-    option (protocol) = 10;
+    option (protocol) = 20;
     option (reply)    = true;
 
     uint32                   id      = 1; // ID of the command being replied to
@@ -45,8 +61,13 @@ message CommandResponse {
     repeated CommandArgument results = 3; // Responses from the command
 }
 
+// The CommandError message describes an error response to an
+// administrative command.  The ID field is the same as that sent by
+// the client.  The message will be accompanied by a numerical error
+// code, suitable for interpretation by administrative clients, and an
+// error message string, suitable for display to a user.
 message CommandError {
-    option (protocol) = 10;
+    option (protocol) = 20;
     option (error)    = true;
 
     uint32  id      = 1; // ID of the command that caused the error

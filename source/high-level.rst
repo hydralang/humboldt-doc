@@ -23,6 +23,7 @@ the network location.  A given conduit is identified by a pair of
 conduit URIs.
 
 .. index:: ! conduit; URI
+.. _conduit-uri:
 
 Conduit URI
 ===========

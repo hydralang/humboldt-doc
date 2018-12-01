@@ -2,21 +2,23 @@ syntax = "proto3";
 
 package net.kevnet.humboldt;
 
+// The Link message describes a single link to a Humboldt instance.
 message Link {
     bool   client         =  1; // True if the connection is a client
     bool   admin          =  2; // True if the connection is an admin client
     bool   encrypted      =  3; // True if the link is encrypted
     bool   integrity      =  4; // True if the link has integrity protection
-    uint32 strength       =  5; // Estimate of the encryption strength
-    uint32 min_proto      =  6; // Minimum protocol version
-    uint32 max_proto      =  7; // Maximum protocol version
-    uint32 proto          =  8; // Selected protocol version
-    bytes  node_id        =  9; // Node ID
-    uint32 generation     = 10; // Node generation
-    uint32 client_id      = 11; // Client ID
-    string local_uri      = 12; // Local conduit URI
-    string remote_uri     = 13; // Remote conduit URI
-    uint32 rtt            = 14; // Round-trip time estimate
-    uint32 deviation      = 15; // Round-trip time deviation estimate
-    string implementation = 16; // Implementation tag
+    string principal      =  5; // Principal for the link, if any
+    uint32 strength       =  6; // Estimate of the encryption strength
+    uint32 min_proto      =  7; // Minimum protocol version
+    uint32 max_proto      =  8; // Maximum protocol version
+    uint32 proto          =  9; // Selected protocol version
+    bytes  node_id        = 10; // Node ID
+    uint32 generation     = 11; // Node generation
+    uint32 client_id      = 12; // Client ID
+    string local_uri      = 13; // Local conduit URI
+    string remote_uri     = 14; // Remote conduit URI
+    uint32 rtt            = 15; // Round-trip time estimate
+    uint32 deviation      = 16; // Round-trip time deviation estimate
+    string implementation = 17; // Implementation tag
 }

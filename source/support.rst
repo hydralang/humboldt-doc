@@ -332,3 +332,270 @@ with a ``LinkStateAck`` message:
    :ref:`ls-regen` timer expiring, the new link state protocol frame
    **MUST** be generated with the most recent available information
    for the :abbr:`RTT (Round-Trip Time)` of all links.
+
+.. _admin-cmd-proto:
+
+Administrative Command Protocol
+===============================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 20
+     - 0
+     - Admin Clients
+     - Nodes
+
+The administrative command protocol provides a means of administrating
+a single Humboldt node.  Administrative clients may use this protocol
+to instruct the node to perform a number of tasks, including shutting
+down, connecting to another node, or retrieving data.  Administrative
+clients may also use commands to subscribe to certain network data
+that may change over time, but which most clients would not be
+interested in, such as link state frames.
+
+A ``CommandRequest`` message is used to send the command to the node.
+This message includes a client-generated ID, which may be used by the
+client to differentiate responses in the face of multiple in-flight
+commands.  The commands may be any value from the ``Command``
+enumeration (and are described in subsections below).  (Implementation
+specific commands can be specified as well; the range of enumeration
+values starting at 50000 is reserved for this purpose.)  Some commands
+may require arguments; the ``CommandRequest`` message uses the
+``CommandArgument`` message for each of the arguments.  The
+``Command`` enumeration and ``CommandArgument`` and ``CommandRequest``
+messages are defined as follows:
+
+.. literalinclude:: protobuf/admin.proto
+   :language: proto
+   :lines: 8-48
+   :lineno-match:
+   :caption: :download:`admin.proto <protobuf/admin.proto>`
+
+.. note::
+
+   All commands, including implementation-specific commands, **MUST**
+   be idempotent.  Nodes **MAY** use the client-generated ID to ensure
+   that commands are not executed multiple times in the face of packet
+   loss, but it is **RECOMMENDED** that commands be constructed in
+   such a fashion that they are inherently idempotent; for example, a
+   subscription command **SHOULD** take a boolean value indicating
+   whether to subscribe or unsubscribe.
+
+The Humboldt node **MUST** respond to a ``CommandRequest`` message
+with either a ``CommandResponse`` or ``CommandError`` message, as
+appropriate; these messages are defined as follows:
+
+.. literalinclude:: protobuf/admin.proto
+   :language: proto
+   :lines: 50-75
+   :lineno-match:
+   :caption: :download:`admin.proto <protobuf/admin.proto>`
+
+In either case, the ID **MUST** match the ID provided by the client in
+the ``CommandRequest`` message.  In the ``CommandError`` message, a
+numerical code provides a computer-readable indication of the error,
+and a human-readable, UTF-8 encoded string is provided for display to
+the user.
+
+.. note::
+
+   As with the protocol 0 ``ERR`` frame, it is **NOT RECOMMENDED**
+   that this error message be localized; these errors should be in
+   English to facilitate web searches for the error message.
+
+.. _noop-cmd:
+
+The ``NOOP`` Command
+--------------------
+
+The ``NOOP`` command does nothing.  It takes no arguments and produces
+no results.  It provides an additional way for a client to confirm
+that it has administrative privileges.  This command really exists
+because enumerations always default to 0.
+
+.. _shutdown-cmd:
+
+The ``SHUTDOWN`` Command
+------------------------
+
+The ``SHUTDOWN`` command causes the Humboldt node to shut down
+cleanly.  It takes no arguments and produces no results.  The node
+**MUST** generate the ``CommandResponse`` prior to shutting down, but
+clients are warned that operating system-level buffering may result in
+the ``CommandResponse`` message being lost.
+
+.. _connect-cmd:
+
+The ``CONNECT`` Command
+-----------------------
+
+The ``CONNECT`` command is used to instruct the Humboldt node to
+connect to another node.  This mechanism is provided to allow a node
+to connect to at least one other network node, after which the
+:ref:`self-assembly` algorithm can take over.
+
+The arguments to the ``CONNECT`` command must be a sequence of
+canonical :ref:`conduit-uri` strings.  The ``CommandResponse`` message
+will contain no results, and simply indicates receipt of the command;
+the connection will be queued by the Humboldt instance, as described
+in :ref:`self-assembly`.
+
+.. _link-subscribe-cmd:
+
+The ``LINK_SUBSCRIBE`` Command
+------------------------------
+
+The ``LINK_SUBSCRIBE`` command is used to instruct the Humboldt node
+to start or stop sending :ref:`link-subscription-proto` frames to the
+client.  The ``CommandRequest`` will include a single boolean
+argument; if ``true``, the client will be subscribed.  Likewise, the
+``CommandResponse`` will include a boolean result indicating the state
+of the subscription.
+
+.. _ls-subscribe-cmd:
+
+The ``LS_SUBSCRIBE`` Command
+----------------------------
+
+The ``LS_SUBSCRIBE`` command is used to instruct the Humboldt node to
+start or stop sending :ref:`link-state-proto` frames to the client.
+The ``CommandRequest`` will include a single boolean argument; if
+``true``, the client will be subscribed.  Likewise, the
+``CommandResponse`` will include a boolean result indicating the state
+of the subscription.
+
+When a client is subscribed to link state protocol frames, it will
+receive all the frames *as sent by the node*, that is, after the
+decrement of the ``max_hops`` field.  However, all the frames will be
+forwarded to a subscribed client, even ones for which ``max_hops`` has
+been decremented to 0.  In conjunction with the :ref:`ls-table-cmd`,
+this allows the client to synchronize with the node's link state
+table.
+
+.. _fwd-subscribe-cmd:
+
+The ``FWD_SUBSCRIBE`` Command
+-----------------------------
+
+The ``FWD_SUBSCRIBE`` command is used to instruct the Humboldt node to
+start or stop sending :ref:`fwd-subscription-proto` frames to the
+client.  The ``CommandRequest`` will include a single boolean
+argument; if ``true``, the client will be subscribed.  Likewise, the
+``CommandResponse`` will include a boolean result indicating the state
+of the subscription.
+
+When a client is subscribed to forward table subscription protocol
+frames, it will receive a frame each time the forwarding table is
+regenerated.
+
+.. _gos-subscribe-cmd:
+
+The ``GOS_SUBSCRIBE`` Command
+-----------------------------
+
+The ``GOS_SUBSCRIBE`` command is used to instruct the Humboldt node to
+start or stop sending :ref:`gossip-subscription-proto` frames to the
+client.  The ``CommandRequest`` will include a single boolean
+argument; if ``true``, the client will be subscribed.  Likewise, the
+``CommandResponse`` will include a boolean result indicating the state
+of the subscription.
+
+When a client is subscribed to gossip subscription protocol frames, it
+will receive frames for all other Humboldt nodes that the connected
+node learns about through the gossip protocol.  If the node already
+knows about the other node, including through the gossip protocol,
+that will not be passed on to the subscribed client.
+
+.. _log-subscribe-cmd:
+
+The ``LOG_SUBSCRIBE`` Command
+-----------------------------
+
+The ``LOG_SUBSCRIBE`` command is used to instruct the Humboldt node to
+start or stop sending :ref:`log-subscription-proto` frames to the
+client.  The ``CommandRequest`` will include a single boolean
+argument; if ``true``, the client will be subscribed.  Likewise, the
+``CommandResponse`` will include a boolean result indicating the state
+of the subscription.
+
+When a client is subscribed to log subscription protocol frames, the
+Humboldt node **MUST NOT** send log messages related to that client.
+This precaution avoids the possibility of a log message explosion due
+to a subscribed client.
+
+.. note::
+
+   It is **NOT RECOMMENDED** that log messages be localized; these
+   messages should be in English to facilitate web searches for the
+   log message.
+
+.. caution::
+
+   Clients are warned that different implementations may have very
+   different log messages, different logging frequencies, and
+   different log filtering.  The protocol does not include any means
+   of adjusting the filtering an implementation uses; if such
+   adjustment is provided by an implementation, it is **RECOMMENDED**
+   that it be provided through an extension command.
+
+.. _links-cmd:
+
+The ``LINKS`` Command
+---------------------
+
+The ``LINKS`` command is used to retrieve a list of all of the
+Humboldt node's current links.  The request takes no arguments, and
+the response will contain, for each link, a ``Link`` message
+describing the link.  This message is defined as follows:
+
+.. literalinclude:: protobuf/link.proto
+   :language: proto
+   :lines: 5-24
+   :lineno-match:
+   :caption: :download:`link.proto <protobuf/link.proto>`
+
+.. _ls-table-cmd:
+
+The ``LS_TABLE`` Command
+------------------------
+
+The ``LS_TABLE`` command is used to retrieve the Humboldt node's link
+state table, consisting of all the link state protocol frames that
+have been received by the node.  The request takes no arguments, and
+the results will contain, for each link state protocol frame, a
+``LinkState`` message, as defined in :ref:`link-state-proto`.
+
+.. _fwd-table-cmd:
+
+The ``FWD_TABLE`` Command
+-------------------------
+
+The ``FWD_TABLE`` command is used to retrieve the Humboldt node's
+forwarding table, as computed using the :ref:`link-state-algorithm`.
+The request takes no arguments, and the results will contain, for each
+entry in the forwarding table, a ``ForwardTo`` message defined as
+follows:
+
+.. literalinclude:: protobuf/forward.proto
+   :language: proto
+   :lines: 5-11
+   :lineno-match:
+   :caption: :download:`forward.proto <protobuf/forward.proto>`
+
+.. _gos-table-cmd:
+
+The ``GOS_TABLE`` Command
+-------------------------
+
+The ``GOS_TABLE`` command is used to retrieve the Humboldt node's
+gossip table.  This table includes all nodes that the Humboldt node
+*only* knows about due to the gossip exchange (see :ref:`ping-proto`
+for more information).  The request takes no arguments, and the
+results will contain, for each entry in the table, a ``NodeRumor``.
+(Again, see :ref:`ping-proto` for the definition of this message.)
