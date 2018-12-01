@@ -614,11 +614,10 @@ restricted to a subset of the nodes, described in this document as the
 :term:`horizon` of the routing protocol.  This is accomplished by
 enforcing a :term:`time to live` on the link state frame.
 
-For more on the link state protocol, see :ref:`link-state-proto` and
-:ref:`link-lost-proto`.  The remainder of this section describes the
-algorithm used to construct the routing table from the link state
-table, composed of the known link state frames, which are cached by
-the node.
+For more on the link state protocol, see :ref:`link-state-proto`.  The
+remainder of this section describes the algorithm used to construct
+the routing table from the link state table, composed of the known
+link state frames, which are cached by the node.
 
 Every time the link state table is updated, the node utilizes the
 :ref:`debouncing-algorithm` (controlled by the :ref:`ls-batch` and

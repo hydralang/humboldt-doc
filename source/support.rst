@@ -256,24 +256,25 @@ Link State Protocol
 
    A given event could occur multiple times in succession.  For
    instance, a network anomaly could cause multiple peers to
-   disconnect.  If a Humboldt node generated a new link state protocol
-   frame for each of these events, several such frames could be
-   generated in quick succession, all with different sequence numbers.
-   To mitigate this effect, Humboldt nodes **MUST** implement the
-   :ref:`debouncing-algorithm` for this case.  The duration of the
-   shorter duration timer is given by :ref:`ls-batch`, and the longer
-   timer by :ref:`ls-max`.  (Note: these same values are also used by
-   the logic that triggers routing table computation; see
-   :ref:`link-state-algorithm` for more information.)
+   disconnect in quick succession.  If a Humboldt node generated a new
+   link state protocol frame for each of these events, several such
+   frames could be generated in quick succession, all with different
+   sequence numbers.  To mitigate this effect, Humboldt nodes **MUST**
+   implement the :ref:`debouncing-algorithm` for this case.  The
+   duration of the shorter duration timer is given by :ref:`ls-batch`,
+   and the longer timer by :ref:`ls-max`.  (Note: these same values
+   are also used by the logic that triggers routing table computation;
+   see :ref:`link-state-algorithm` for more information.)
 
 The link state protocol is responsible for distributing routing
 information throughout the Humboldt network.  A node generates and
-broadcasts a link state protocol frame whenever a link RTT has changed
-by more than 10 percent; whenever a link is lost or a new link has
-reached the active state; or periodically, at a time interval
-specified by the :ref:`ls-regen` configuration value.  It is
-**REQUIRED** that Humboldt implementations use :term:`debouncing`
-logic to batch updates; see the sidebar for more information.
+broadcasts a link state protocol frame whenever a link :abbr:`RTT
+(Round Trip Time)` has changed by more than 10 percent; whenever a
+link is lost or a new link has reached the active state; or
+periodically, at a time interval specified by the :ref:`ls-regen`
+configuration value.  It is **REQUIRED** that Humboldt implementations
+use :term:`debouncing` logic to batch updates; see the sidebar for
+more information.
 
 A link state protocol frame, described by the ``LinkState`` message,
 contains the :ref:`node-id` and :ref:`generation-id` of the node that
