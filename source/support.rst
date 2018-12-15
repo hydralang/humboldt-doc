@@ -373,7 +373,7 @@ messages are defined as follows:
 
 .. literalinclude:: protobuf/admin.proto
    :language: proto
-   :lines: 8-48
+   :lines: 8-50
    :lineno-match:
    :caption: :download:`admin.proto <protobuf/admin.proto>`
 
@@ -393,7 +393,7 @@ appropriate; these messages are defined as follows:
 
 .. literalinclude:: protobuf/admin.proto
    :language: proto
-   :lines: 50-75
+   :lines: 52-77
    :lineno-match:
    :caption: :download:`admin.proto <protobuf/admin.proto>`
 
