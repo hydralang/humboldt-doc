@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+// The Disconnect message describes a desired disconnection of a node.
+// This includes the node ID and an optional generation ID.  A
+// sequence number allows subsequent disconnections.
+message Disconnect {
+    option (protocol) = 15;
+
+    bytes  id         = 1; // Node ID to be disconnected
+    uint32 generation = 2; // Optional generation ID
+    uint32 sequence   = 3; // Sequence number
+}
+
+// The DisconnectAck message serves to acknowledge the Disconnect
+// message on a hop-by-hop basis.
+message DisconnectAck {
+    option (protocol) = 15;
+    option (reply)    = true;
+
+    bytes  id         = 1; // Node ID in Disconnect message
+    uint32 generation = 2; // Optional generation ID
+    uint32 sequence   = 3; // Sequence number
+}

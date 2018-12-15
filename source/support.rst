@@ -333,6 +333,68 @@ with a ``LinkStateAck`` message:
    **MUST** be generated with the most recent available information
    for the :abbr:`RTT (Round-Trip Time)` of all links.
 
+.. _node-disconnect-proto:
+
+Node Disconnection Protocol
+===========================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 15
+     - 0
+     - Nodes; Admin Clients
+     - Nodes
+
+There are times when a node must be forcibly disconnected from a
+Humboldt network.  The node disconnection protocol provides a means
+for this to occur.  Because the node can be connected to any point in
+the network, and because we do not want to trust the node itself to
+effect the disconnection, in case the reason for the disconnection is
+a security compromise, this is a message that is globally broadcast.
+The node to be disconnected can be identified by its node ID and,
+optionally, its generation ID; if the generation ID is provided, all
+instances of a node with a generation ID less than or equal to the
+provided generation ID will be disconnected, but instances with a
+numerically larger generation ID will be unaffected.  The
+disconnection is effected with a ``Disconnect`` message, defined as
+follows:
+
+.. literalinclude:: protobuf/disconnect.proto
+   :language: proto
+   :lines: 7-16
+   :lineno-match:
+   :caption: :download:`disconnect.proto <protobuf/disconnect.proto>`
+
+Because the disconnection protocol is a broadcast, the ``Disconnect``
+message is acknowledged hop-by-hop with a ``DisconnectAck`` message,
+defined as follows:
+
+.. literalinclude:: protobuf/disconnect.proto
+   :language: proto
+   :lines: 18-27
+   :lineno-match:
+   :caption: :download:`disconnect.proto <protobuf/disconnect.proto>`
+
+Upon receipt of a new ``Disconnect`` message, nodes **MUST**
+disconnect the specified node if it is linked, then forward the
+message to all other next hops.  The message ID is composed of the
+sequence number, the node ID and, if present, the generation ID; this
+is to be cached to allow identification of rebroadcasts of the same
+disconnection.
+
+Administrative clients **SHOULD** originate ``Disconnect`` messages
+without a sequence number; the receiving node **MUST** assign an
+appropriate sequence number prior to forwarding the message on to
+other nodes.  The sequence number **SHOULD** be a monotonically
+increasing number; as with the generation ID, a 32-bit timestamp is an
+acceptable implementation for the sequence number.
+
 .. _admin-cmd-proto:
 
 Administrative Command Protocol
