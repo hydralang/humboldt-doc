@@ -473,8 +473,8 @@ the user.
 
 .. _noop-cmd:
 
-The ``NOOP`` Command
---------------------
+``NOOP`` Command
+----------------
 
 The ``NOOP`` command does nothing.  It takes no arguments and produces
 no results.  It provides an additional way for a client to confirm
@@ -483,8 +483,8 @@ because enumerations always default to 0.
 
 .. _shutdown-cmd:
 
-The ``SHUTDOWN`` Command
-------------------------
+``SHUTDOWN`` Command
+--------------------
 
 The ``SHUTDOWN`` command causes the Humboldt node to shut down
 cleanly.  It takes no arguments and produces no results.  The node
@@ -494,8 +494,8 @@ the ``CommandResponse`` message being lost.
 
 .. _connect-cmd:
 
-The ``CONNECT`` Command
------------------------
+``CONNECT`` Command
+-------------------
 
 The ``CONNECT`` command is used to instruct the Humboldt node to
 connect to another node.  This mechanism is provided to allow a node
@@ -510,8 +510,8 @@ in :ref:`self-assembly`.
 
 .. _link-subscribe-cmd:
 
-The ``LINK_SUBSCRIBE`` Command
-------------------------------
+``LINK_SUBSCRIBE`` Command
+--------------------------
 
 The ``LINK_SUBSCRIBE`` command is used to instruct the Humboldt node
 to start or stop sending :ref:`link-subscription-proto` frames to the
@@ -522,8 +522,8 @@ of the subscription.
 
 .. _ls-subscribe-cmd:
 
-The ``LS_SUBSCRIBE`` Command
-----------------------------
+``LS_SUBSCRIBE`` Command
+------------------------
 
 The ``LS_SUBSCRIBE`` command is used to instruct the Humboldt node to
 start or stop sending :ref:`link-state-proto` frames to the client.
@@ -542,8 +542,8 @@ table.
 
 .. _fwd-subscribe-cmd:
 
-The ``FWD_SUBSCRIBE`` Command
------------------------------
+``FWD_SUBSCRIBE`` Command
+-------------------------
 
 The ``FWD_SUBSCRIBE`` command is used to instruct the Humboldt node to
 start or stop sending :ref:`fwd-subscription-proto` frames to the
@@ -558,8 +558,8 @@ regenerated.
 
 .. _gos-subscribe-cmd:
 
-The ``GOS_SUBSCRIBE`` Command
------------------------------
+``GOS_SUBSCRIBE`` Command
+-------------------------
 
 The ``GOS_SUBSCRIBE`` command is used to instruct the Humboldt node to
 start or stop sending :ref:`gossip-subscription-proto` frames to the
@@ -576,8 +576,8 @@ that will not be passed on to the subscribed client.
 
 .. _log-subscribe-cmd:
 
-The ``LOG_SUBSCRIBE`` Command
------------------------------
+``LOG_SUBSCRIBE`` Command
+-------------------------
 
 The ``LOG_SUBSCRIBE`` command is used to instruct the Humboldt node to
 start or stop sending :ref:`log-subscription-proto` frames to the
@@ -608,8 +608,8 @@ to a subscribed client.
 
 .. _links-cmd:
 
-The ``LINKS`` Command
----------------------
+``LINKS`` Command
+-----------------
 
 The ``LINKS`` command is used to retrieve a list of all of the
 Humboldt node's current links.  The request takes no arguments, and
@@ -624,8 +624,8 @@ describing the link.  This message is defined as follows:
 
 .. _ls-table-cmd:
 
-The ``LS_TABLE`` Command
-------------------------
+``LS_TABLE`` Command
+--------------------
 
 The ``LS_TABLE`` command is used to retrieve the Humboldt node's link
 state table, consisting of all the link state protocol frames that
@@ -635,8 +635,8 @@ the results will contain, for each link state protocol frame, a
 
 .. _fwd-table-cmd:
 
-The ``FWD_TABLE`` Command
--------------------------
+``FWD_TABLE`` Command
+---------------------
 
 The ``FWD_TABLE`` command is used to retrieve the Humboldt node's
 forwarding table, as computed using the :ref:`link-state-algorithm`.
@@ -652,8 +652,8 @@ follows:
 
 .. _gos-table-cmd:
 
-The ``GOS_TABLE`` Command
--------------------------
+``GOS_TABLE`` Command
+---------------------
 
 The ``GOS_TABLE`` command is used to retrieve the Humboldt node's
 gossip table.  This table includes all nodes that the Humboldt node
