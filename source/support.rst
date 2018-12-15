@@ -661,3 +661,48 @@ gossip table.  This table includes all nodes that the Humboldt node
 for more information).  The request takes no arguments, and the
 results will contain, for each entry in the table, a ``NodeRumor``.
 (Again, see :ref:`ping-proto` for the definition of this message.)
+
+.. _link-subscription-proto:
+
+Link Subscription Protocol
+==========================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 21
+     - 0
+     - Nodes
+     - Admin Clients
+
+The :ref:`link-subscribe-cmd` subscribes an administrative client to
+changes in the node's links.  This subscription delivers messages to
+the administrative client containing all the link's details, along
+with an indication of the type of change: a new link (``NEW``), a lost
+link (``LOST``), a forcibly disconnected link (``DISCONNECT``), or a
+change of the :abbr:`RTT (Round-Trip Time)` by more than 10%.  This
+``LinkChange`` enumeration, along with the ``LinkChangeMessage``
+message sent to the administrative client, are defined as follows:
+
+.. literalinclude:: protobuf/link_sub.proto
+   :language: proto
+   :lines: 8-25
+   :lineno-match:
+   :caption: :download:`link_sub.proto <protobuf/link_sub.proto>`
+
+As with most Humboldt protocol messages, this one must be acknowledged
+by the administrative client, using the ``LinkChangeAck`` message:
+
+.. literalinclude:: protobuf/link_sub.proto
+   :language: proto
+   :lines: 27-34
+   :lineno-match:
+   :caption: :download:`link_sub.proto <protobuf/link_sub.proto>`
+
+The ``Link`` message contained within the ``LinkChangeMessage``
+message is described in :ref:`links-cmd`.

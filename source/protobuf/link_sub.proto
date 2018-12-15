@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "link.proto";
+
+// The LinkChange enumeration lists the available changes for a link.
+enum LinkChange {
+    NONE       = 0; // No change
+    NEW        = 1; // A new link has been established
+    LOST       = 2; // A link has been lost
+    DISCONNECT = 3; // The link has been forcibly disconnected
+    RTT        = 4; // The RTT has changed by more than 10%
+}
+
+// The LinkChangeMessage message describes the change of a single
+// link.
+message LinkChangeMessage {
+    option (protocol) = 21;
+
+    uint32     id     = 1; // ID of the message
+    Link       link   = 2; // The link that was changed
+    LinkChange change = 3; // The change that occurred on the link
+}
+
+// The LinkChangeAck message acknowledges receipt of a
+// LinkChangeMessage.  The ID must match that of the message.
+message LinkChangeAck {
+    option (protocol) = 21;
+    option (reply)    = true;
+
+    uint32 id = 1; // ID of the message being acknowledged
+}

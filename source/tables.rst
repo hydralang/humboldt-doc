@@ -117,3 +117,8 @@ Table of Protocols
      - 0
      - Admin Clients
      - Nodes
+   * - :ref:`link-subscription-proto`
+     - 21
+     - 0
+     - Nodes
+     - Admin Clients
