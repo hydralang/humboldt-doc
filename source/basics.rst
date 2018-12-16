@@ -60,7 +60,7 @@ extension header so that the protocol processor may skip it.  Humboldt
 uses the exact same mechanism, with another 4-byte header per
 extension, laid out like so:
 
-.. literalinclude:: ../build/bits/carrier.txt
+.. literalinclude:: ../build/bits/extension.txt
    :language: none
 
 This format begins with 3 flag bits, which describe the disposition of
