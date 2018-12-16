@@ -5,15 +5,20 @@ package net.kevnet.humboldt;
 import "extensions.proto";
 import "rumor.proto";
 
+// The GossipMessage message describes a peer that the node has
+// learned about through the gossip protocol.  This message will not
+// be generated for peers that the node already knows about.
 message GossipMessage {
-    option (protocol) = 11;
+    option (protocol) = 23;
 
     uint32    id    = 1; // ID of the message
     NodeRumor rumor = 2; // Rumor that was discovered
 }
 
+// The GossipAck message acknowledges receipt of a GossipMessage
+// message.
 message GossipAck {
-    option (protocol) = 11;
+    option (protocol) = 23;
     option (reply)    = true;
 
     uint32 id = 1; // ID of the message being acknowledged

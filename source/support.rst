@@ -748,3 +748,45 @@ with a ``ForwardTableAck`` message:
    :caption: :download:`forward_sub.proto <protobuf/forward_sub.proto>`
 
 The ``ForwardTo`` message is described in :ref:`fwd-table-cmd`.
+
+.. _gossip-subscription-proto:
+
+Gossip Subscription Protocol
+============================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 23
+     - 0
+     - Nodes
+     - Admin Clients
+
+The :ref:`gos-subscribe-cmd` subscribes an administrative client to
+gossip about other peers.  Each time the node learns about a peer
+through the gossip protocol (see :ref:`ping-proto`), the node will
+send a ``GossipMessage`` to the subscribed administrative clients with
+that rumor.  The ``GossipMessage`` is described as follows:
+
+.. literalinclude:: protobuf/gossip_sub.proto
+   :language: proto
+   :lines: 8-16
+   :lineno-match:
+   :caption: :download:`gossip_sub.proto <protobuf/gossip_sub.proto>`
+
+The message ID is a simple, monotonically increasing 32-bit integer.
+Clients **MUST** acknowledge receipt of the ``GossipMessage`` message
+with a ``GossipAck`` message:
+
+.. literalinclude:: protobuf/gossip_sub.proto
+   :language: proto
+   :lines: 18-25
+   :lineno-match:
+   :caption: :download:`gossip_sub.proto <protobuf/gossip_sub.proto>`
+
+The ``NodeRumor`` message is described in :ref:`ping-proto`.

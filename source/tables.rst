@@ -127,3 +127,8 @@ Table of Protocols
      - 0
      - Nodes
      - Admin Clients
+   * - :ref:`gossip-subscription-proto`
+     - 23
+     - 0
+     - Nodes
+     - Admin Clients
