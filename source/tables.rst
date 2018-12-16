@@ -132,3 +132,8 @@ Table of Protocols
      - 0
      - Nodes
      - Admin Clients
+   * - :ref:`log-subscription-proto`
+     - 24
+     - 0
+     - Nodes
+     - Admin Clients

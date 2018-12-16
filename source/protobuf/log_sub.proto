@@ -4,15 +4,20 @@ package net.kevnet.humboldt;
 
 import "extensions.proto";
 
+// The LogMessage message encapsulates implementation-specific log
+// messages for delivery to subscribed administrative clients.  This
+// allows the administrator additional flexibility in configuration of
+// log message collection.
 message LogMessage {
-    option (protocol) = 12;
+    option (protocol) = 24;
 
-    uint32 id      = 1; // ID of the message
-    string message = 2; // Log message
+    uint32 id  = 1; // ID of the message
+    string log = 2; // Log message
 }
 
+// The LogAck message acknowledges receipt of a LogMessage.
 message LogAck {
-    option (protocol) = 12;
+    option (protocol) = 24;
     option (reply)    = true;
 
     uint32 id = 1; // ID of the message being acknowledged

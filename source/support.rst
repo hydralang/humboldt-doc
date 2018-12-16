@@ -790,3 +790,69 @@ with a ``GossipAck`` message:
    :caption: :download:`gossip_sub.proto <protobuf/gossip_sub.proto>`
 
 The ``NodeRumor`` message is described in :ref:`ping-proto`.
+
+.. _log-subscription-proto:
+
+Log Subscription Protocol
+=========================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 24
+     - 0
+     - Nodes
+     - Admin Clients
+
+The :ref:`log-subscribe-cmd` subscribes an administrative client to
+log messages.  This provides the administrator of a Humboldt node
+extra flexibility with respect to collecting the log messages.  Log
+messages are encapsulated in a ``LogMessage`` message, defined as
+follows:
+
+.. literalinclude:: protobuf/log_sub.proto
+   :language: proto
+   :lines: 7-16
+   :lineno-match:
+   :caption: :download:`log_sub.proto <protobuf/log_sub.proto>`
+
+The message ID is a simple, monotonically increasing 32-bit integer.
+Clients **MUST** acknowledge receipt of the ``LogMessage`` message
+with a ``LogAck`` message:
+
+.. literalinclude:: protobuf/log_sub.proto
+   :language: proto
+   :lines: 18-24
+   :lineno-match:
+   :caption: :download:`log_sub.proto <protobuf/log_sub.proto>`
+
+.. note::
+
+   It is **NOT RECOMMENDED** that log messages be localized; these
+   messages should be in English to facilitate web searches for the
+   log message.
+
+.. caution::
+
+   Clients are warned that different implementations may have very
+   different log messages, different logging frequencies, and
+   different log filtering.  The protocol does not include any means
+   of adjusting the filtering an implementation uses; if such
+   adjustment is provided by an implementation, it is **RECOMMENDED**
+   that it be provided through an extension command.
+
+.. warning::
+
+   Some implementations may produce log messages at such a rate that
+   they may overflow the message ID.  Both clients and servers
+   **MUST** allow for message ID wrap-around to accommodate this.
+   Additionally, node implementations **MUST NOT** send an
+   administrative client log messages related to itself.  This latter
+   provision prevents a situation where a flood of log messages is
+   generated through the action of sending a log message to a
+   subscribed administrative client.
