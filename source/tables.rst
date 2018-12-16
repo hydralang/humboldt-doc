@@ -82,63 +82,76 @@ Table of Protocols
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - :ref:`proto-negot`
      - 0
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     -
    * - :ref:`node-id-proto`
      - 1
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     -
    * - :ref:`ping-proto`
      - 2
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     - ``timestamp``
    * - :ref:`conf-proto`
      - 3
      - 0
      - Nodes; Admin Clients
      - Nodes; Clients
+     - ``timestamp``
    * - :ref:`link-state-proto`
      - 10
      - 0
      - Nodes
      - Nodes; Admin Clients
+     - ``sequence``, ``id``, ``generation``
    * - :ref:`node-disconnect-proto`
      - 15
      - 0
      - Nodes; Admin Clients
      - Nodes
+     - ``id``, ``generation``, ``sequence``
    * - :ref:`client-disconnect-proto`
      - 16
      - 0
      - Nodes; Admin Clients
      - Nodes
+     - ``source``, ``id``
    * - :ref:`admin-cmd-proto`
      - 20
      - 0
      - Admin Clients
      - Nodes
+     - ``id``
    * - :ref:`link-subscription-proto`
      - 21
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
    * - :ref:`fwd-subscription-proto`
      - 22
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
    * - :ref:`gossip-subscription-proto`
      - 23
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
    * - :ref:`log-subscription-proto`
      - 24
      - 0
      - Nodes
      - Admin Clients
+     - ``id``

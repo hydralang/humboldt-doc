@@ -25,10 +25,12 @@ Node ID Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 1
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     -
 
 The node ID protocol frame is exchanged immediately after conduit
 establishment.  To facilitate protocol negotiation (see
@@ -82,10 +84,12 @@ Ping Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 2
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     - ``timestamp``
 
 The ping protocol frames are exchanged to validate aliveness of
 directly linked peer nodes and to measure the :abbr:`RTT (Round-Trip
@@ -174,10 +178,12 @@ Configuration Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 3
      - 0
      - Nodes; Admin Clients
      - Nodes; Clients
+     - ``timestamp``
 
 The configuration protocol frames are exchanged immediately after
 exchanging node ID information.  They are also exchanged, in a
@@ -247,10 +253,12 @@ Link State Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 10
      - 0
      - Nodes
      - Nodes; Admin Clients
+     - ``sequence``, ``id``, ``generation``
 
 .. sidebar:: Debouncing
 
@@ -357,10 +365,12 @@ Node Disconnection Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 15
      - 0
      - Nodes; Admin Clients
      - Nodes
+     - ``id``, ``generation``, ``sequence``
 
 There are times when a node must be forcibly disconnected from a
 Humboldt network.  The node disconnection protocol provides a means
@@ -419,10 +429,12 @@ Client Disconnection Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 16
      - 0
      - Nodes; Admin Clients
      - Nodes
+     - ``source``, ``id``
 
 The client disconnection protocol is analogous to the
 :ref:`node-disconnect-proto`, but meant for clients.  Since a client
@@ -473,10 +485,12 @@ Administrative Command Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 20
      - 0
      - Admin Clients
      - Nodes
+     - ``id``
 
 The administrative command protocol provides a means of administrating
 a single Humboldt node.  Administrative clients may use this protocol
@@ -740,10 +754,12 @@ Link Subscription Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 21
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
 
 The :ref:`link-subscribe-cmd` subscribes an administrative client to
 changes in the node's links.  This subscription delivers messages to
@@ -785,10 +801,12 @@ Forward Table Subscription Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 22
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
 
 The :ref:`fwd-subscribe-cmd` subscribes an administrative client to
 changes in the node's forwarding table.  This subscription delivers
@@ -827,10 +845,12 @@ Gossip Subscription Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 23
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
 
 The :ref:`gos-subscribe-cmd` subscribes an administrative client to
 gossip about other peers.  Each time the node learns about a peer
@@ -869,10 +889,12 @@ Log Subscription Protocol
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 24
      - 0
      - Nodes
      - Admin Clients
+     - ``id``
 
 The :ref:`log-subscribe-cmd` subscribes an administrative client to
 log messages.  This provides the administrator of a Humboldt node
