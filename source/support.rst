@@ -706,3 +706,45 @@ by the administrative client, using the ``LinkChangeAck`` message:
 
 The ``Link`` message contained within the ``LinkChangeMessage``
 message is described in :ref:`links-cmd`.
+
+.. _fwd-subscription-proto:
+
+Forward Table Subscription Protocol
+===================================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 22
+     - 0
+     - Nodes
+     - Admin Clients
+
+The :ref:`fwd-subscribe-cmd` subscribes an administrative client to
+changes in the node's forwarding table.  This subscription delivers
+the updated forwarding table to the administrative client each time it
+is recomputed.  The updated table is delivered as a ``ForwardTable``
+message, defined as follows:
+
+.. literalinclude:: protobuf/forward_sub.proto
+   :language: proto
+   :lines: 8-15
+   :lineno-match:
+   :caption: :download:`forward_sub.proto <protobuf/forward_sub.proto>`
+
+The message ID is a simple, monotonically increasing 32-bit integer.
+Clients **MUST** acknowledge receipt of the ``ForwardTable`` message
+with a ``ForwardTableAck`` message:
+
+.. literalinclude:: protobuf/forward_sub.proto
+   :language: proto
+   :lines: 17-24
+   :lineno-match:
+   :caption: :download:`forward_sub.proto <protobuf/forward_sub.proto>`
+
+The ``ForwardTo`` message is described in :ref:`fwd-table-cmd`.

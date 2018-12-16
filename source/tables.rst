@@ -122,3 +122,8 @@ Table of Protocols
      - 0
      - Nodes
      - Admin Clients
+   * - :ref:`fwd-subscription-proto`
+     - 22
+     - 0
+     - Nodes
+     - Admin Clients

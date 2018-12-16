@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+import "forward.proto";
+
+// The ForwardTable message contains the newly computed forwarding
+// table.
+message ForwardTable {
+    option (protocol) = 22;
+
+    uint32             id    = 1; // ID of the message
+    repeated ForwardTo table = 2; // Updated forwarding table
+}
+
+// The ForwardTableAck message acknowledges receipt of a ForwardTable
+// message.
+message ForwardTableAck {
+    option (protocol) = 22;
+    option (reply)    = true;
+
+    uint32 id = 1; // ID of the message being acknowledged
+}
