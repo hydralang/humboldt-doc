@@ -573,7 +573,7 @@ chance that frames traverse a cycle in the network due to routing
 table recomputation, the link state algorithm computes both a
 preferred primary next hop and a secondary, next-best hop; if a frame
 was received from the primary next hop, the node will instead forward
-it to the next-best hop instead.
+it to the next-best hop.
 
 .. _debouncing-algorithm:
 
