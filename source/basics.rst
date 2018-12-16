@@ -95,10 +95,12 @@ Protocol Versioning and Negotiation
      - Since Minor
      - Sent From
      - Sent To
+     - Message ID Fields
    * - 0
      - 0
      - Nodes; Clients
      - Nodes; Clients
+     -
 
 The protocol version field specifies the overall major version of the
 Humboldt protocol, labeling it "0".  This version designates all the
