@@ -534,7 +534,7 @@ the first and second self-assembly rules.
 In any given round, the Humboldt node **MUST** choose a node at
 random, with additional weight provided to nodes with greater hop
 distances, and the greatest weight provided to nodes that the Humboldt
-node as learned about only through a "gossip" interaction (see
+node has learned about only through a "gossip" interaction (see
 :ref:`gossip-proto`).  There is also a probability that the Humboldt
 node *won't* attempt to make any additional connection; this
 probability increases as the number of connections approaches
