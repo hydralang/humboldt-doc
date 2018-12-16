@@ -23,10 +23,12 @@ Variables
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
 
@@ -42,10 +44,12 @@ of the self-assembly algorithm.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 50
      -
 
@@ -65,10 +69,12 @@ algorithm.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 3
      -
 
@@ -87,10 +93,12 @@ to this value.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5
      -
 
@@ -106,10 +114,12 @@ outgoing connections a node may seek at once.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
 
@@ -125,10 +135,12 @@ time to store a broadcast frame's ID.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5000
      - :abbr:`ms (milliseconds)`
 
@@ -146,10 +158,12 @@ debouncing, see :ref:`debouncing-algorithm`.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5
      -
 
@@ -166,10 +180,12 @@ the memory footprint of Humboldt nodes.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
 
@@ -187,10 +203,12 @@ and :ref:`link-state-proto`).  For more on debouncing, see
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
 
@@ -206,10 +224,12 @@ regardless of changes to the link state.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5000
      - :abbr:`ms (milliseconds)`
 
@@ -226,10 +246,12 @@ the network in a timely manner.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5
      -
 
@@ -245,10 +267,12 @@ the connection has been lost and closes it.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 5
      -
 
@@ -264,10 +288,12 @@ retransmissions to attempt.
    :header-rows: 1
    :widths: auto
 
-   * - Type
+   * - Since Minor
+     - Type
      - Default
      - Units
-   * - ``uint32``
+   * - 0
+     - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
 

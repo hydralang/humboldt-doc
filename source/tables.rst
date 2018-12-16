@@ -12,58 +12,72 @@ Table of Configuration Values
    :widths: auto
 
    * - Name
+     - Since Minor
      - Type
      - Default
      - Units
    * - :ref:`asm-freq`
+     - 0
      - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
    * - :ref:`asm-maxconn`
+     - 0
      - ``uint32``
      - 50
      -
    * - :ref:`asm-minconn`
+     - 0
      - ``uint32``
      - 3
      -
    * - :ref:`asm-qlen`
+     - 0
      - ``uint32``
      - 5
      -
    * - :ref:`bcast-cache`
+     - 0
      - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
    * - :ref:`ls-batch`
+     - 0
      - ``uint32``
      - 5000
      - :abbr:`ms (milliseconds)`
    * - :ref:`ls-horizon`
+     - 0
      - ``uint32``
      - 5
      -
    * - :ref:`ls-max`
+     - 0
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
    * - :ref:`ls-regen`
+     - 0
      - ``uint32``
      - 600000
      - :abbr:`ms (milliseconds)`
    * - :ref:`ping-freq`
+     - 0
      - ``uint32``
      - 5000
      - :abbr:`ms (milliseconds)`
    * - :ref:`ping-lost`
+     - 0
      - ``uint32``
      - 5
      -
    * - :ref:`ret-cnt`
+     - 0
      - ``uint32``
      - 5
      -
    * - :ref:`ret-max`
+     - 0
      - ``uint32``
      - 30000
      - :abbr:`ms (milliseconds)`
