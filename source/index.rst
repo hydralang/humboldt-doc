@@ -47,6 +47,7 @@ client.
    high-level
    basics
    support
+   transport
    history
    configuration
    glossary
