@@ -112,6 +112,11 @@ Table of Protocols
      - 0
      - Nodes; Admin Clients
      - Nodes
+   * - :ref:`client-disconnect-proto`
+     - 16
+     - 0
+     - Nodes; Admin Clients
+     - Nodes
    * - :ref:`admin-cmd-proto`
      - 20
      - 0

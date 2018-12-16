@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package net.kevnet.humboldt;
+
+import "extensions.proto";
+
+// The ClientDisconnect message is routed to the target client, which
+// is to disconnect the identified client.  The message ID is composed
+// of both the source node's ID and the message ID, which is only
+// guaranteed to be unique across the source node.
+message ClientDisconnect {
+    option (protocol) = 16;
+
+    bytes  source = 1; // ID of the node originating the message
+    uint32 id     = 2; // Message ID, for acknowledgments
+    bytes  target = 3; // ID of the node the target client is on
+    uint32 client = 4; // ID of the client to disconnect
+    string reason = 5; // Optional reason for the disconnection
+}
+
+// The ClientDisconnectAck message is an end-to-end acknowledgment
+// used to inform the originating node that the targeted client has
+// been disconnected.
+message ClientDisconnectAck {
+    option (protocol) = 16;
+    option (reply)    = true;
+
+    bytes  source = 1; // ID of the node originating the ClientDisconnect
+    uint32 id     = 2; // Message ID
+    bytes  target = 3; // ID of the node the target client is on
+    uint32 client = 4; // ID of the client disconnected
+}
+
+// The ClientDisconnectError message is an end-to-end acknowledgment
+// used to inform the originating node that the targeted client could
+// not be disconnected.  An error message will be provided to explain
+// the reason for the failure.
+message ClientDisconnectError {
+    option (protocol) = 16;
+    option (error)    = true;
+
+    bytes  source = 1; // ID of the node originating the ClientDisconnect
+    uint32 id     = 2; // Message ID
+    bytes  target = 3; // ID of the node the target client is on
+    uint32 client = 4; // ID of the client disconnected
+    string error  = 5; // Message describing the error
+}

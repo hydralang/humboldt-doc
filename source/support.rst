@@ -406,6 +406,60 @@ other nodes.  The sequence number **SHOULD** be a monotonically
 increasing number; as with the generation ID, a 32-bit timestamp is an
 acceptable implementation for the sequence number.
 
+.. _client-disconnect-proto:
+
+Client Disconnection Protocol
+=============================
+
+.. list-table::
+   :header-rows: 1
+   :widths: auto
+
+   * - Protocol Number
+     - Since Minor
+     - Sent From
+     - Sent To
+   * - 16
+     - 0
+     - Nodes; Admin Clients
+     - Nodes
+
+The client disconnection protocol is analogous to the
+:ref:`node-disconnect-proto`, but meant for clients.  Since a client
+is present on exactly one node on the network, the client
+disconnection protocol does not rely on global broadcast to reach the
+target node; instead, the message is forwarded, using the routing
+protocol, to the node the target client is on, and the node then
+disconnects the client (if possible) and sends an acknowledgment back
+to the originator.  Unlike the other support protocols, this protocol
+uses end-to-end acknowledgments.
+
+The ``ClientDisconnect`` message is defined as follows:
+
+.. literalinclude:: protobuf/client_disconnect.proto
+   :language: proto
+   :lines: 7-19
+   :lineno-match:
+   :caption: :download:`client_disconnect.proto <protobuf/client_disconnect.proto>`
+
+An administrative client need only fill in the ``target`` and
+``client`` fields, and may optionally include a ``reason``.  Nodes
+**MUST** ignore the ``source`` and ``id`` fields originating from
+administrative clients and fill in their own values for these fields.
+
+The target node **MUST** respond to a ``ClientDisconnect`` with either
+a ``ClientDisconnectAck`` or a ``ClientDisconnectError`` message,
+depending on whether the disconnection was successful or not.  The
+source node must route the messages back to the originating
+administrative client.  The ``ClientDisconnectAck`` and
+``ClientDisconnectError`` messages are defined as follows:
+
+.. literalinclude:: protobuf/client_disconnect.proto
+   :language: proto
+   :lines: 21-47
+   :lineno-match:
+   :caption: :download:`client_disconnect.proto <protobuf/client_disconnect.proto>`
+
 .. _admin-cmd-proto:
 
 Administrative Command Protocol
