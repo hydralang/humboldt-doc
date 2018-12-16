@@ -333,6 +333,17 @@ with a ``LinkStateAck`` message:
    **MUST** be generated with the most recent available information
    for the :abbr:`RTT (Round-Trip Time)` of all links.
 
+Receiving nodes cache a link state protocol frame for forwarding table
+generation and for forwarding to newly linked nodes.  This cached
+frame **MUST** be preserved for up to 3 times the :ref:`ls-regen`
+timer value, after which it **MUST** be discarded.  Newly received
+link state protocol frames from the same node replace the old cached
+frame and restart the cache timeout.  Finally, cached link state
+protocol frames **MUST** be discarded if there are no longer any
+visible routes to the originating node.  These rules help ensure that
+a disconnected node, or one which has ceased to function properly, is
+removed from the routing algorithm.
+
 .. _node-disconnect-proto:
 
 Node Disconnection Protocol
