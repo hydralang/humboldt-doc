@@ -263,16 +263,13 @@ value).  After a maximum number of retransmissions (specified by
 :ref:`ret-cnt`), a node **MUST** declare the link dead, for all
 hop-by-hop retransmissions.
 
-.. note::
-
-   Implementations are free to utilize randomization in calculating
-   the actual time to wait between retransmissions.  However, the
-   minimum interval between retransmissions **MUST NOT** be less than
-   one-half the interval calculated by doubling the previous
-   calculated interval.  Moreover, it is the nominal interval that is
-   doubled in each round, not the randomized interval actually used.
-   Finally, randomization **MUST NOT** be used for the first
-   retransmission timer.
+Exponential backoff alone is not enough, however.  As documented in an
+article ([Exponential]_), pure exponential backoff results in clusters
+of calls in the case of large numbers of senders.  To smooth out these
+clusters, Humboldt implementations **MUST** use :term:`jitter` in
+conjunction with the exponential backoff.  It is **RECOMMENDED** that
+implementations use the "Full Jitter" technique described in
+[Exponential]_.
 
 .. index:: ! broadcast
 .. _broadcast:

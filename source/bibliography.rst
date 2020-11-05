@@ -7,3 +7,4 @@ Bibliography
 .. [Peterson2007] Peterson, Larry L. and Davie, Bruce S.  *Computer
                   Networks, A Systems Approach*.  San Francisco:
                   Morgan Kaufmann, 2007.  Print.
+.. [Exponential] https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/

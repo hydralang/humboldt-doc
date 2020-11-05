@@ -112,6 +112,11 @@ Glossary
        given frame multiple times are identical to the case where the
        frame was received exactly once.
 
+   jitter
+       The introduction of randomness into sleep times used with
+       :term:`exponential backoff` in order to smooth out the
+       clustering of retransmissions.
+
    link-state routing protocols
        Routing protocols where the nodes periodically send out
        messages to all nodes about their own state, including
