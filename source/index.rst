@@ -6,13 +6,13 @@ Overview
 ========
 
 Humboldt is a highly-scalable, self-assembling :term:`overlay network`
-that provides :term:`unicast`, :term:`anycast`, :term:`multicast`,
-:term:`broadcast`, and network-wide configuration services within the
-network.  A given Humboldt instance (called a :term:`node` or
-:term:`peer`) can connect to any other peer in the network, and will
-automatically set up appropriately redundant links with no further
-intervention by the administrator.  Humboldt nodes have local
-configuration that is used to configure link security, and
+that provides :term:`unicast`, :term:`anycast`, :term:`targetcast`,
+:term:`multicast`, :term:`broadcast`, and network-wide configuration
+services within the network.  A given Humboldt instance (called a
+:term:`node` or :term:`peer`) can connect to any other peer in the
+network, and will automatically set up appropriately redundant links
+with no further intervention by the administrator.  Humboldt nodes
+have local configuration that is used to configure link security, and
 network-wide configuration that can be altered by an administrative
 client.
 

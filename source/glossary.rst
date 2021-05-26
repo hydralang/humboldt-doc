@@ -11,8 +11,9 @@ Glossary
 
    anycast
        A transport protocol characterized by messages traveling from
-       one source to one of a set of destinations, typically the
-       closest destination (in terms of network distance).
+       one source to the closest (in terms of network distance) of a
+       set of destinations.  Typically used for interchangable
+       services.
 
    authentication
        The process of proving the identity of an entity.
@@ -197,6 +198,12 @@ Glossary
        security layer implemented on top of an underlying network
        protocol, that presents to the application the appearance of a
        never ending stream of data.
+
+   targetcast
+       A transport protocol characterized by messages traveling from
+       one source to the closest to a target (in terms of network
+       distance) of a set of destinations.  Typically used for
+       segmented services, such as distributed hash tables.
 
    time to live
    TTL

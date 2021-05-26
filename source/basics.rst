@@ -450,14 +450,14 @@ Application ID
 --------------
 
 The application ID serves the same purpose in :term:`anycast`,
-:term:`multicast`, and :term:`broadcast` transports that the client ID
-serves in the :term:`unicast` transport.  However, the application ID
-is intended to be a well-known number for the specific application(s)
-utilizing Humboldt.  This number **MAY** be disseminated through the
-:ref:`conf-proto`, or through an application-specific registry
-operating on a well-known application ID; applications **MAY** also
-choose to simply hard-code the application ID, depending on the needs
-of the application.
+:term:`targetcast`, :term:`multicast`, and :term:`broadcast`
+transports that the client ID serves in the :term:`unicast` transport.
+However, the application ID is intended to be a well-known number for
+the specific application(s) utilizing Humboldt.  This number **MAY**
+be disseminated through the :ref:`conf-proto`, or through an
+application-specific registry operating on a well-known application
+ID; applications **MAY** also choose to simply hard-code the
+application ID, depending on the needs of the application.
 
 .. index:: protocol; encapsulated
 .. index:: protocol; support
