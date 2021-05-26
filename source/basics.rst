@@ -671,3 +671,9 @@ for each ``Destination``.  The algorithm consists of 4 steps:
 For Humboldt, the ``Cost`` in the link state frame is the smoothed
 :abbr:`RTT (Round Trip Time)`; see :ref:`rtt-calc` for details on how
 the round trip time is calculated.
+
+.. todo::
+
+   Need to add a discussion around the link state machine and when a
+   link is considered active.  This may include adding some sort of
+   "link acknowledged" protocol that's not currently present.
